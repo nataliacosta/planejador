@@ -166,6 +166,13 @@
                 zoomMax: 1000 * 60 * 60 * 60 * 60 * 2.5,
                 editable: true,
                 orientation: 'top',
+                editable: {
+                    add: false,         // add new items by double tapping
+                    updateTime: true,  // drag items horizontally
+                    updateGroup: true, // drag items from one group to another
+                    remove: true,       // delete an item by tapping the delete button top right
+                    overrideItems: true  // allow these options to override item.editable
+                },
                 onRemove: (item, callback) => {
                     var conteudos = item.content.split("<br>");
                     var itemHTML = "<li id='" 
