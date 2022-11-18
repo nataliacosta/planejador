@@ -1,0 +1,299 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Timeline | Drag & Drop</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="vis-4.21.0/dist/vis.min.js" ></script>
+    <link href="vis-4.21.0/dist/vis.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" ></script>
+    
+    <style>
+        li.item {
+            list-style: none;
+            width: 100%;
+            color: #1A1A1A;
+            background-color: #D5DDF6;
+            border: 1px solid #97B0F8;
+            border-radius: 2px;
+            margin-bottom: 5px;
+            padding: 5px 12px;
+        }
+
+        li.item:before {
+            content: "≣";
+            font-family: Arial, sans-serif;
+            margin-right: 2%;
+            display: inline-block;
+            font-size: inherit;
+            cursor: move;
+        }
+
+        li.object-item {
+            list-style: none;
+            width: 100%;
+            color: #1A1A1A;
+            background-color: #D5DDF6;
+            border: 1px solid #97B0F8;
+            border-radius: 2px;
+            margin-bottom: 5px;
+            padding: 5px 12px;
+        }
+
+        li.object-item:before {
+            content: "≣";
+            font-family: Arial, sans-serif;
+            display: inline-block;
+            font-size: inherit;
+            cursor: move;
+        }
+
+        .items-panel {
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+
+<body class="container-fluid">
+    <div id="default">
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <div class="p-2">
+                <h1>Planejamento Atende e Resolve</h1>
+            </div>
+            <div class="p-2">
+                <a id="download" href="#">Download</a>
+            </div>
+        </div>
+        <div id="mytimeline"></div>
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <div class="col-12 container-fluid">
+                    <h3>Projetos a distribuir</h3>
+                    <div id="projPend" class="row"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="nodata" class="d-none">
+        Não há dados, favor fazer upload.
+    </div>
+    
+    <script type="module">
+        var data = localStorage.getItem("data");
+        if (data.length == 0) {
+            $("#default").addClass("d-none");
+            $("#nodata").removeClass("d-none");
+        } else {
+            var projetos = JSON.parse(data).projetos;
+            var equipes = JSON.parse(data).equipes;
+            var complexidades = JSON.parse(data).complexidades;
+
+            var retrievedObject = localStorage.getItem('data');
+            console.log(retrievedObject);
+
+            var groups = new vis.DataSet();
+            // adding groups
+            groups.add(equipes);
+
+            // create items
+            var items = new vis.DataSet();
+
+            var projPendHTML = "";
+            projetos.forEach((p) => {
+                projPendHTML += "<div class='col-3 mt-2'><h6>" + p.titulo + "</h5> <ul class='items' id='" + p.id + "'>";
+                var temItem = false;
+                p.etapas.forEach((etapa) => {
+                    if (etapa.group == "") {
+                        projPendHTML += "<li id='" 
+                                        + p.id 
+                                        + "_" 
+                                        + etapa.grupo 
+                                        + "' draggable='true' class='item' style='word-wrap: break-word;'>" 
+                                        + etapa.titulo + "<br><span class='small'> Complexidade: " 
+                                        + p.complexidade 
+                                        + "</span>"
+                                        + "</li>";
+                        temItem = true;
+                    } else {
+                        items.add({
+                            id: p.id + "_" + etapa.grupo,
+                            group: etapa.group,
+                            start: etapa.inicio,
+                            end: etapa.fim,
+                            content: p.titulo + "<br>" + etapa.titulo + "<br><span class='small'>Complexidade: " + p.complexidade + "</span>",
+                        });
+                    }
+                });
+
+                if (!temItem) {
+                    projPendHTML += "Não há etapas disponíveis."
+                }
+                projPendHTML += "</ul></div>";
+            });
+            $("#projPend").html(projPendHTML);
+
+            // specify options
+            var options = {
+                stack: false,
+                start: new Date(2023, 0, 1),
+                end: new Date(2024, 0, 1),
+                zoomMin: 1000 * 60 * 60 * 60 * 4,
+                zoomMax: 1000 * 60 * 60 * 60 * 60 * 2.5,
+                editable: true,
+                orientation: 'top',
+                onRemove: (item, callback) => {
+                    var conteudos = item.content.split("<br>");
+                    var itemHTML = "<li id='" 
+                        + item.id
+                        + "' draggable='true' class='item' style='word-wrap: break-word;'>" 
+                        + conteudos[1] + "<br>" 
+                        + conteudos[2]
+                        + "</span>"
+                        + "</li>";
+
+                    var etapa = projetos.filter((a) => { return a.id == item.id.split("_")[0] })[0].etapas.filter((b) => { return b.grupo == item.id.split("_")[1] })[0];
+                    etapa.group = "";
+                    etapa.inicio = "";
+                    etapa.fim = "";
+
+                    $('#' + item.id.split("_")[0]).children('span').remove();
+                    $('#' + item.id.split("_")[0]).append(itemHTML);
+                    addListen();
+                    callback(item);   
+                }
+            };
+
+            // create a Timeline
+            var container = document.getElementById('mytimeline');
+            var timeline1 = new vis.Timeline(container, items, groups, options);
+
+            function handleDragStart(event) {
+                var dragSrcEl = event.target;
+                var proj = $(projetos).filter((i,n) =>{
+                    return n.id==((event.target.id).split("_")[0]);
+                })[0];
+
+                event.dataTransfer.effectAllowed = 'move';
+                var itemType = "range";
+                var item = {
+                    id: event.target.id,
+                    type: itemType,
+                    content: proj.titulo + "<br>" + event.target.innerHTML
+                };
+                // set event.target ID with item ID
+                event.target.id = item.id;
+                event.dataTransfer.setData("text", JSON.stringify(item));
+
+                // Trigger on from the new item dragged when this item drag is finish
+                event.target.addEventListener('dragend', handleDragEnd.bind(this), false);
+                
+            }
+            
+            // ACERTA DURAÇÃO E EXCLUI LINHA AO DRAG END E EXCLUI ITEM
+            function handleDragEnd(event) {
+                var idProjeto = event.target.id.split("_")[0];
+                var grupo = event.target.id.split("_")[1];
+                var projeto = projetos.filter((i) => {
+                    return (i.id==idProjeto);
+                })[0];
+                var tempoDev = complexidades.filter((i2) => { return i2.id==projeto.complexidade})[0].duracao[grupo];
+                var inicio = new Date(timeline1.itemSet.items[event.target.id].data.start);
+                var fim = new Date(inicio);
+                fim.setDate(inicio.getDate() + tempoDev);
+                timeline1.itemSet.items[event.target.id].data.end = fim;
+
+                //altera em projetos
+                var etapa = projeto.etapas.filter((i3) => { return i3.grupo==grupo })[0];
+                etapa.group = timeline1.itemSet.items[event.target.id].data.group;
+                etapa.inicio = timeline1.itemSet.items[event.target.id].data.inicio;
+                etapa.fim = timeline1.itemSet.items[event.target.id].data.fim;
+                
+                $(event.srcElement).remove();
+
+                if ($("#" + idProjeto)[0].children.length == 0) {
+                    $("#" + idProjeto).append("<span id='empty'>Não há tarefas disponíveis.</span>");
+                }
+            }
+
+            // ACERTA DURAÇÃO AO ITEM
+            function handleItemChange(e, obj) {
+                var idProjeto = obj.items[0].split("_")[0];
+                var grupo = obj.items[0].split("_")[1];
+                var projeto = $(projetos).filter((i, n) => {
+                    return (n.id==idProjeto);
+                })[0];
+                var tempoDev = $(complexidades).filter((i2, n2) => { return n2.id==projeto.complexidade})[0].duracao[grupo];
+                var inicio = new Date(timeline1.itemSet.items[obj.items].data.start);
+                var fim = new Date(inicio);
+                fim.setDate(inicio.getDate() + tempoDev);
+
+                timeline1.itemSet.items[obj.items].data.end = fim;
+            }
+
+            //ADD EVENT LISTENS
+            function addListen() {
+                var items2 = document.querySelectorAll('.items .item');
+
+                for (var i = items2.length - 1; i >= 0; i--) {
+                    items2[i].addEventListener('dragstart', handleDragStart.bind(this), false);
+                }
+            
+                items.on('update', (event, props) => {
+                    handleItemChange(event, props);
+                });
+            }
+
+            addListen();
+            
+            //download
+            window.fazDownload = () => {
+                const obj = {
+                    "projetos": projetos,
+                    "equipes": equipes,
+                    "complexidades": complexidades
+                };
+
+                const text = JSON.stringify(obj, null, "\t");
+                const name = "data.json";
+                const type = "text/plain";
+
+                const a = document.createElement("a");
+                const file = new Blob([text], { type: type });
+                a.href = URL.createObjectURL(file);
+                a.download = name;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            }
+
+            $("#download").attr("onclick", "fazDownload()");
+            
+            //upload
+            window.fazUpload = () => {
+                const obj = {
+                    "projetos": projetos,
+                    "equipes": equipes,
+                    "complexidades": complexidades
+                };
+
+                const text = JSON.stringify(obj, null, "\t");
+                const name = "data.json";
+                const type = "text/plain";
+
+                const a = document.createElement("a");
+                const file = new Blob([text], { type: type });
+                a.href = URL.createObjectURL(file);
+                a.download = name;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            }
+
+            $("#download").attr("onclick", "fazDownload()");
+        }
+
+    </script>
+</body>
+</html>
