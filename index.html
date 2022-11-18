@@ -63,7 +63,9 @@
                 <h1>Planejamento Atende e Resolve</h1>
             </div>
             <div class="p-2">
+                <input id="file2" type="file" class=""/>
                 <a id="download" href="#">Download</a>
+                <a id="salvar" href="#">Salvar</a>
             </div>
         </div>
         <div id="mytimeline"></div>
@@ -76,11 +78,33 @@
             </div>
         </div>
     </div>
-    <div id="nodata" class="d-none">
-        Não há dados, favor fazer upload.
+    <div id="nodata" class="d-flex flex-row justify-content-between align-items-center d-none">
+        <div class="p-2">
+            <h1>Não há dados, favor fazer upload.</h1>
+        </div>
+        <div class="p-2">
+            <input id="file1" type="file" class="" />
+        </div>
     </div>
     
     <script type="module">
+
+        // lidar com upload de json
+        function onChange(event) {
+            var reader = new FileReader();
+            reader.onload = onReaderLoad;
+            reader.readAsText(event.target.files[0]);
+        }
+
+        function onReaderLoad(event){
+            localStorage.setItem("data", event.target.result);
+            location.reload();
+        }
+    
+        document.getElementById('file1').addEventListener('change', onChange);
+        document.getElementById('file2').addEventListener('change', onChange);
+
+        //inicio
         var data = localStorage.getItem("data");
         if (data.length == 0) {
             $("#default").addClass("d-none");
@@ -91,7 +115,6 @@
             var complexidades = JSON.parse(data).complexidades;
 
             var retrievedObject = localStorage.getItem('data');
-            console.log(retrievedObject);
 
             var groups = new vis.DataSet();
             // adding groups
@@ -207,8 +230,8 @@
                 //altera em projetos
                 var etapa = projeto.etapas.filter((i3) => { return i3.grupo==grupo })[0];
                 etapa.group = timeline1.itemSet.items[event.target.id].data.group;
-                etapa.inicio = timeline1.itemSet.items[event.target.id].data.inicio;
-                etapa.fim = timeline1.itemSet.items[event.target.id].data.fim;
+                etapa.inicio = timeline1.itemSet.items[event.target.id].data.start;
+                etapa.fim = timeline1.itemSet.items[event.target.id].data.end;
                 
                 $(event.srcElement).remove();
 
@@ -221,15 +244,20 @@
             function handleItemChange(e, obj) {
                 var idProjeto = obj.items[0].split("_")[0];
                 var grupo = obj.items[0].split("_")[1];
-                var projeto = $(projetos).filter((i, n) => {
+                var projeto = projetos.filter((n) => {
                     return (n.id==idProjeto);
                 })[0];
-                var tempoDev = $(complexidades).filter((i2, n2) => { return n2.id==projeto.complexidade})[0].duracao[grupo];
+                var tempoDev = complexidades.filter((n2) => { return n2.id==projeto.complexidade})[0].duracao[grupo];
                 var inicio = new Date(timeline1.itemSet.items[obj.items].data.start);
                 var fim = new Date(inicio);
                 fim.setDate(inicio.getDate() + tempoDev);
-
                 timeline1.itemSet.items[obj.items].data.end = fim;
+
+                //altera em projetos
+                var etapa = projeto.etapas.filter((i3) => { return i3.grupo==grupo })[0];
+                etapa.group = timeline1.itemSet.items[obj.items].data.group;
+                etapa.inicio = timeline1.itemSet.items[obj.items].data.start;
+                etapa.fim = timeline1.itemSet.items[obj.items].data.end;
             }
 
             //ADD EVENT LISTENS
@@ -292,6 +320,19 @@
             }
 
             $("#download").attr("onclick", "fazDownload()");
+
+            //salvar
+            window.salvar = () => {
+                const obj = {
+                    "projetos": projetos,
+                    "equipes": equipes,
+                    "complexidades": complexidades
+                };
+                const text = JSON.stringify(obj, null, "\t");
+                localStorage.setItem("data", text);
+            }
+
+            $("#salvar").attr("onclick", "salvar()");
         }
 
     </script>
