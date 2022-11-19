@@ -68,6 +68,10 @@
                 <a id="salvar" href="#">Salvar</a>
             </div>
         </div>
+        <div id="custoTotal">
+            Custo total do projeto: 
+            <span id="custo"></span>
+        </div>
         <div id="mytimeline"></div>
         <div class="container-fluid mt-3">
             <div class="row">
@@ -159,7 +163,7 @@
 
             // specify options
             var options = {
-                stack: false,
+                stack: true,
                 start: new Date(2023, 0, 1),
                 end: new Date(2024, 0, 1),
                 zoomMin: 1000 * 60 * 60 * 60 * 4,
@@ -185,11 +189,22 @@
                     $('#' + item.id.split("_")[0]).children('span').remove();
                     $('#' + item.id.split("_")[0]).append(itemHTML);
                     addListen();
-                    callback(item);   
+                    callback(item);
+                    var remover = []
+                    custosItems.forEach((e, i) => {
+                        if (e.id == item.id) {
+                            remover.push(i);
+                        }
+                    });
+                    remover.reverse().forEach((i) => {
+                        custosItems.splice(i,1);
+                    });
+                    calcCustos();
                 },
                 onAdd: (item, callback) => {
                     if (item.content !== "new item" ) {
                         callback(item);
+                        calcCustos();
                     }
                 }
             };
@@ -264,7 +279,70 @@
                 etapa.group = timeline1.itemSet.items[obj.items].data.group;
                 etapa.inicio = timeline1.itemSet.items[obj.items].data.start;
                 etapa.fim = timeline1.itemSet.items[obj.items].data.end;
+                
+                calcCustos();
             }
+
+            // início custos
+            var custosItems = [];
+
+            function getConcorrentes(mes, group) {
+                return custosItems.filter((e) => {
+                    return (e.mes == mes && e.group == group);
+                });
+            }
+
+            function calcCustos() {
+                custosItems = [];
+                var items = Object.values(timeline1.itemSet.items).sort((a,b) => (new Date(a.data.start) > new Date(b.data.start)) ? 1 : ((new Date(b.data.start) > new Date(a.data.start)) ? -1 : 0));
+                var idProjeto = "";
+                var idGrupo = "";
+                var quantMeses = 0;
+                items.forEach((item) => {
+                    idProjeto = item.id.split("_")[0];
+                    idGrupo = item.id.split("_")[1];
+                    var inicio = new Date(item.data.start);
+                    var fim = new Date(item.data.end);
+
+                    for (var date = new Date(inicio.getFullYear(), inicio.getMonth(), 1); date < fim; date.setMonth(date.getMonth()+1)) {
+                        var dataInicio = (date < inicio ? inicio : date);
+                        var dataFim = (date.getMonth() == fim.getMonth() && date.getFullYear() == fim.getFullYear() ? fim : new Date(date.getFullYear(), date.getMonth()+1, 0));
+                        var concorrentes = getConcorrentes(date.getFullYear().toString() + ("0" + (date.getMonth() + 1)).slice(-2).toString(),item.data.group);
+                        if (concorrentes.length == 0) {
+                            custosItems.push({
+                                id: item.id,
+                                group: item.data.group,
+                                mes: date.getFullYear().toString() + ("0" + (date.getMonth() + 1)).slice(-2).toString(),
+                                quantDias: (dataFim.getTime() - dataInicio.getTime()) / (1000 * 3600 * 24),
+                                custo: equipes.filter((e) => {
+                                    return e.id==item.data.group;
+                                })[0].valor_mensal,
+                            });
+                        } else {
+                            var totalDias = concorrentes.reduce((a, o) => { return a + o.quantDias },0) + (dataFim.getTime() - dataInicio.getTime()) / (1000 * 3600 * 24);
+                            var valMensal = equipes.find((e) => { return e.id == item.data.group }).valor_mensal;
+                            concorrentes.forEach((e) => {
+                                e.custo = valMensal / totalDias * e.quantDias;
+                            });
+                            custosItems.push({
+                                id: item.id,
+                                group: item.data.group,
+                                mes: date.getFullYear().toString() + ("0" + (date.getMonth() + 1)).slice(-2).toString(),
+                                quantDias: (dataFim.getTime() - dataInicio.getTime()) / (1000 * 3600 * 24),
+                                custo: valMensal / totalDias * (dataFim.getTime() - dataInicio.getTime()) / (1000 * 3600 * 24)
+                            });
+                        }
+                    }
+                });
+                var custoTotal = custosItems.reduce((a, o) => { return a + o.custo },0);
+                $("#custo").html(custoTotal.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                }));
+            }
+            calcCustos();
+
+            //detalhes custos
 
             //ADD EVENT LISTENS
             function addListen() {
@@ -278,7 +356,6 @@
                     handleItemChange(event, props);
                 });
             }
-
             addListen();
             
             //download
