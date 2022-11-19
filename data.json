@@ -401,47 +401,47 @@
         {
             "id": "neg",
             "content": "Time Negócio",
-            "valor_mensal": ""
+            "valor_mensal": 0
         },
         {
             "id": "lt",
             "content": "Líder Técnica",
-            "valor_mensal": ""
+            "valor_mensal": 0
         }, 
         {
             "id": "sap1",
             "content": "Time SAP 1 (Edilaine + ABAP bodyshop)",
-            "valor_mensal": ""
+            "valor_mensal": 10000
         },
         {
             "id": "sap2",
             "content": "Time SAP 2 (Bárbara + Matheus)",
-            "valor_mensal": ""
+            "valor_mensal": 10000
         },
         {
             "id": "sap3",
             "content": "Time SAP 3 (Camilla + ABAP bodyshop)",
-            "valor_mensal": ""
+            "valor_mensal": 10000
         },
         {
             "id": "sys1",
             "content": "Time Sysmanager 1",
-            "valor_mensal": ""
+            "valor_mensal": 30000
         },
         {
             "id": "sys2",
             "content": "Time Sysmanager 2",
-            "valor_mensal": ""
+            "valor_mensal": 30000
         }, 
         {
             "id": "zen1",
             "content": "Time Zenvia 1",
-            "valor_mensal": ""
+            "valor_mensal": 40000
         },
         {
             "id": "zen2",
             "content": "Time Zenvia 2",
-            "valor_mensal": ""
+            "valor_mensal": 40000
         }
     ],
     "complexidades": [
