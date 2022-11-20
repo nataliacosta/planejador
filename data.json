@@ -1,489 +1,558 @@
 {
-    "projetos": [
-        {
-            "id": "LNO-COM",
-            "titulo": "Ligação Nova - Envio de Comunicado",
-            "desc": "",
-            "SO": "",
-            "complexidade": "média",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "lt",
-                    "inicio": "Sun Jan 01 2023 00:00:00 GMT-0300 (Brasilia Standard Time)",
-                    "fim": "Sat Jan 07 2023 00:00:00 GMT-0300 (Brasilia Standard Time)"
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Whatsapp",
-                    "grupo": "wpp",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "VCO-SIMU",
-            "titulo": "Variação de Consumo - Correção de Simulação de Conta",
-            "desc": "",
-            "SO": "",
-            "complexidade": "média",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Agência Virtual",
-                    "grupo": "agv",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Mobile",
-                    "grupo": "app",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "VCO-TEMP",
-            "titulo": "Variação de Consumo - Validação de Temperatura",
-            "desc": "",
-            "SO": "",
-            "complexidade": "alta",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Agência Virtual",
-                    "grupo": "agv",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Mobile",
-                    "grupo": "app",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "VCO-ENCREC",
-            "titulo": "Variação de Consumo - Encerramento automático reclamações improcedentes",
-            "desc": "",
-            "SO": "",
-            "complexidade": "baixa",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "VCO-COMALT",
-            "titulo": "Variação de Consumo - Comunicados referente as alterações na fatura",
-            "desc": "",
-            "SO": "",
-            "complexidade": "baixa",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Whatsapp",
-                    "grupo": "wpp",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "FLU-COM",
-            "titulo": "Falta de Luz - Comunicados de Falta de Luz",
-            "desc": "",
-            "SO": "",
-            "complexidade": "baixa",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Whatsapp",
-                    "grupo": "wpp",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "ECO-COM",
-            "titulo": "Encerramento de Contrato - Criação de comunicados referente ao processo de encerramento de contrato",
-            "desc": "",
-            "SO": "",
-            "complexidade": "baixa",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Whatsapp",
-                    "grupo": "wpp",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "SVPPR-BLACKLIST",
-            "titulo": "Segunda Via, Parcelamento, Pagamento e Religação - Criação de blacklist de clientes religa indevida",
-            "desc": "",
-            "SO": "",
-            "complexidade": "baixa",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "SVI-VALCOMP",
-            "titulo": "Segunda Via, Parcelamento, Pagamento e Religação - Criação de validação de comprovante - Simply",
-            "desc": "",
-            "SO": "",
-            "complexidade": "média",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Agência Virtual",
-                    "grupo": "agv",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Mobile",
-                    "grupo": "app",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Whatsapp",
-                    "grupo": "wpp",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "SVI-COM",
-            "titulo": "Segunda Via, Parcelamento, Pagamento e Religação - Criação de comunicados referente ao processo de pagamento e corte",
-            "desc": "",
-            "SO": "",
-            "complexidade": "baixa",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Whatsapp",
-                    "grupo": "wpp",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "DEL-SAP",
-            "titulo": "Danos Elétricos - Criação de ambiente SAP com melhorias",
-            "desc": "",
-            "SO": "",
-            "complexidade": "altíssima",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "DEL-NOT",
-            "titulo": "Danos Elétricos - Criação de nota de atendimento de danos elétricos",
-            "desc": "",
-            "SO": "",
-            "complexidade": "alta",
-            "pre-req": "",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        },
-        {
-            "id": "DEL-COM",
-            "titulo": "Danos Elétricos - Criação de comunicados de danos elétricos",
-            "desc": "",
-            "SO": "",
-            "complexidade": "baixa",
-            "pre-req": "DEL-SAP,DEL-NOT",
-            "etapas": [
-                {
-                    "titulo": "Entendimento Inicial",
-                    "grupo": "lt",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "SAP",
-                    "grupo": "sap",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                },
-                {
-                    "titulo": "Whatsapp",
-                    "grupo": "wpp",
-                    "group": "",
-                    "inicio": "",
-                    "fim": ""
-                }
-            ]
-        }
-    ],
-    "equipes": [
-        {
-            "id": "neg",
-            "content": "Time Negócio",
-            "valor_mensal": 0
-        },
-        {
-            "id": "lt",
-            "content": "Líder Técnica",
-            "valor_mensal": 0
-        }, 
-        {
-            "id": "sap1",
-            "content": "Time SAP 1 (Edilaine + ABAP bodyshop)",
-            "valor_mensal": 10000
-        },
-        {
-            "id": "sap2",
-            "content": "Time SAP 2 (Bárbara + Matheus)",
-            "valor_mensal": 10000
-        },
-        {
-            "id": "sap3",
-            "content": "Time SAP 3 (Camilla + ABAP bodyshop)",
-            "valor_mensal": 10000
-        },
-        {
-            "id": "sys1",
-            "content": "Time Sysmanager 1",
-            "valor_mensal": 30000
-        },
-        {
-            "id": "sys2",
-            "content": "Time Sysmanager 2",
-            "valor_mensal": 30000
-        }, 
-        {
-            "id": "zen1",
-            "content": "Time Zenvia 1",
-            "valor_mensal": 40000
-        },
-        {
-            "id": "zen2",
-            "content": "Time Zenvia 2",
-            "valor_mensal": 40000
-        }
-    ],
-    "complexidades": [
-        {
-            "id": "baixa",
-            "duracao": {
-                "lt": 14,
-                "sap": 36,
-                "agv": 70,
-                "app": 70,
-                "wpp": 70
-            }
-        },
-        {
-            "id": "média",
-            "duracao": {
-                "lt": 21,
-                "sap": 49,
-                "agv": 112,
-                "app": 112,
-                "wpp": 91
-            }
-        },
-        {
-            "id": "alta",
-            "duracao": {
-                "lt": 28,
-                "sap": 63,
-                "agv": 112,
-                "app": 112,
-                "wpp": 91
-            }
-        },
-        {
-            "id": "altíssima",
-            "duracao": {
-                "lt": 28,
-                "sap": 77,
-                "agv": 126,
-                "app": 126,
-                "wpp": 105
-            }
-        }
-    ]
+	"projetos": [
+		{
+			"id": "LNO-COM",
+			"titulo": "Ligação Nova - Envio de Comunicado",
+			"desc": "",
+			"SO": "",
+			"complexidade": "média",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Whatsapp",
+					"grupo": "wpp",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "VCO-SIMU",
+			"titulo": "Variação de Consumo - Correção de Simulação de Conta",
+			"desc": "",
+			"SO": "",
+			"complexidade": "média",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Agência Virtual",
+					"grupo": "agv",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Mobile",
+					"grupo": "app",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "VCO-TEMP",
+			"titulo": "Variação de Consumo - Validação de Temperatura",
+			"desc": "",
+			"SO": "",
+			"complexidade": "alta",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Agência Virtual",
+					"grupo": "agv",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Mobile",
+					"grupo": "app",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "VCO-ENCREC",
+			"titulo": "Variação de Consumo - Encerramento automático reclamações improcedentes",
+			"desc": "",
+			"SO": "",
+			"complexidade": "baixa",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "VCO-COMALT",
+			"titulo": "Variação de Consumo - Comunicados referente as alterações na fatura",
+			"desc": "",
+			"SO": "",
+			"complexidade": "baixa",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Whatsapp",
+					"grupo": "wpp",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "FLU-COM",
+			"titulo": "Falta de Luz - Comunicados de Falta de Luz",
+			"desc": "",
+			"SO": "",
+			"complexidade": "baixa",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Whatsapp",
+					"grupo": "wpp",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "ECO-COM",
+			"titulo": "Encerramento de Contrato - Criação de comunicados referente ao processo de encerramento de contrato",
+			"desc": "",
+			"SO": "",
+			"complexidade": "baixa",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Whatsapp",
+					"grupo": "wpp",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "SVPPR-BLACKLIST",
+			"titulo": "Segunda Via, Parcelamento, Pagamento e Religação - Criação de blacklist de clientes religa indevida",
+			"desc": "",
+			"SO": "",
+			"complexidade": "baixa",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "SVI-VALCOMP",
+			"titulo": "Segunda Via, Parcelamento, Pagamento e Religação - Criação de validação de comprovante - Simply",
+			"desc": "",
+			"SO": "",
+			"complexidade": "média",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Agência Virtual",
+					"grupo": "agv",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Mobile",
+					"grupo": "app",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Whatsapp",
+					"grupo": "wpp",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "SVI-COM",
+			"titulo": "Segunda Via, Parcelamento, Pagamento e Religação - Criação de comunicados referente ao processo de pagamento e corte",
+			"desc": "",
+			"SO": "",
+			"complexidade": "baixa",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Whatsapp",
+					"grupo": "wpp",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "DEL-SAP",
+			"titulo": "Danos Elétricos - Criação de ambiente SAP com melhorias",
+			"desc": "",
+			"SO": "",
+			"complexidade": "altíssima",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "DEL-NOT",
+			"titulo": "Danos Elétricos - Criação de nota de atendimento de danos elétricos",
+			"desc": "",
+			"SO": "",
+			"complexidade": "alta",
+			"pre-req": "",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		},
+		{
+			"id": "DEL-COM",
+			"titulo": "Danos Elétricos - Criação de comunicados de danos elétricos",
+			"desc": "",
+			"SO": "",
+			"complexidade": "baixa",
+			"pre-req": "DEL-SAP,DEL-NOT",
+			"etapas": [
+				{
+					"titulo": "Entendimento Inicial",
+					"grupo": "lt",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "SAP",
+					"grupo": "sap",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				},
+				{
+					"titulo": "Whatsapp",
+					"grupo": "wpp",
+					"group": "",
+					"inicio": "",
+					"fim": ""
+				}
+			]
+		}
+	],
+	"equipes": [
+		{
+			"id": "neg",
+			"content": "Time Negócio",
+			"fornecedor": "Light",
+			"valor_mensal": 0
+		},
+		{
+			"id": "lt",
+			"content": "Líder Técnica",
+			"fornecedor": "Light",
+			"valor_mensal": 0
+		},
+		{
+			"id": "sap1",
+			"content": "Time SAP 1 (Edilaine + ABAP bodyshop)",
+			"fornecedor": "Neoris",
+			"valor_mensal": 10000
+		},
+		{
+			"id": "sap2",
+			"content": "Time SAP 2 (Bárbara + Matheus)",
+			"fornecedor": "Neoris",
+			"valor_mensal": 10000
+		},
+		{
+			"id": "sap3",
+			"content": "Time SAP 3 (Camilla + ABAP bodyshop)",
+			"fornecedor": "Neoris",
+			"valor_mensal": 10000
+		},
+		{
+			"id": "sys1",
+			"content": "Time Sysmanager 1",
+			"fornecedor": "Sysmanager",
+			"valor_mensal": 30000
+		},
+		{
+			"id": "sys2",
+			"content": "Time Sysmanager 2",
+			"fornecedor": "Sysmanager",
+			"valor_mensal": 30000
+		},
+		{
+			"id": "zen1",
+			"content": "Time Zenvia 1",
+			"fornecedor": "Zenvia",
+			"valor_mensal": 40000
+		},
+		{
+			"id": "zen2",
+			"content": "Time Zenvia 2",
+			"fornecedor": "Zenvia",
+			"valor_mensal": 40000
+		}
+	],
+	"complexidades": [
+		{
+			"id": "baixa",
+			"duracao": [
+				{
+					"grupo": "lt",
+					"tempo": 14
+				},
+				{
+					"grupo": "sap",
+					"tempo": 36
+				},
+				{
+					"grupo": "agv",
+					"tempo": 70
+				},
+				{
+					"grupo": "app",
+					"tempo": 70
+				},
+				{
+					"grupo": "wpp",
+					"tempo": 70
+				}
+			]
+		},
+		{
+			"id": "média",
+			"duracao": [
+				{
+					"grupo": "lt",
+					"tempo": 21
+				},
+				{
+					"grupo": "sap",
+					"tempo": 49
+				},
+				{
+					"grupo": "agv",
+					"tempo": 112
+				},
+				{
+					"grupo": "app",
+					"tempo": 112
+				},
+				{
+					"grupo": "wpp",
+					"tempo": 91
+				}
+			]
+		},
+		{
+			"id": "alta",
+			"duracao": [
+				{
+					"grupo": "lt",
+					"tempo": 28
+				},
+				{
+					"grupo": "sap",
+					"tempo": 63
+				},
+				{
+					"grupo": "agv",
+					"tempo": 112
+				},
+				{
+					"grupo": "app",
+					"tempo": 112
+				},
+				{
+					"grupo": "wpp",
+					"tempo": 91
+				}
+			]
+		},
+		{
+			"id": "altíssima",
+			"duracao": [
+				{
+					"grupo": "lt",
+					"tempo": 28
+				},
+				{
+					"grupo": "sap",
+					"tempo": 77
+				},
+				{
+					"grupo": "agv",
+					"tempo": 126
+				},
+				{
+					"grupo": "app",
+					"tempo": 126
+				},
+				{
+					"grupo": "wpp",
+					"tempo": 105
+				}
+			]
+		}
+	]
 }
