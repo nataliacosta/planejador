@@ -21,7 +21,8 @@ $("#wizard").steps({
     }
 });
 
-//File Upload
+
+//Criar projeto
 $("#uploadDiv").click(fileUpload);
 
 
@@ -43,6 +44,57 @@ function fileUpload() {
     input.addEventListener('change', onChange);
     input.click();
 }
+
+//Grupos
+if (localStorage["grupos"] != null) {
+    var nomesGrupo = localStorage["grupos"].split("|");
+    var grupos = document.getElementById("grupos");
+    var html = "";
+    nomesGrupo.forEach((e, i) => {
+        if (i < nomesGrupo.length - 1) {
+            html += '<div class="form-group col-md-4 border-0">';
+            html += '<div class="text-uppercase d-flex align-items-center border border-success rounded" style="min-height: 50px">';
+            html += '<h6 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + nomesGrupo[i] + '</h6>';
+            html += '</div>';
+            html += '</div>';
+        }
+    });
+    grupos.innerHTML = html;
+}
+
+var btnGrp = document.getElementById("btnGrp");
+btnGrp.addEventListener('click', function (e) {
+    var nomeGrupo = document.getElementById("nomeGrupo").value;
+    if (nomeGrupo == "") {
+        alert("Insira um nome para o grupo.");
+    } else {
+        if (localStorage["grupos"]) {
+            localStorage["grupos"] += nomeGrupo + "|";
+        } else {
+            localStorage["grupos"] = nomeGrupo + "|";
+        }
+        var grupos = document.getElementById("grupos");
+        var html = "";
+        html += '<div class="form-group col-md-4 border-0">';
+        html += '<div class="text-uppercase d-flex align-items-center border border-success rounded" style="min-height: 50px">';
+        html += '<h6 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + nomeGrupo + '</h6>';
+        html += '</div>';
+        html += '</div>';
+        var el = document.createElement("div");
+        el.innerHTML = html;
+        grupos.append(el.firstChild);
+    }
+    document.getElementById("nomeGrupo").value = "";
+});
+
+document.getElementById('nomeGrupo').addEventListener('keyup', function(e) {
+    if (!e) e = window.event;
+    var keyCode = e.code || e.key;
+    if (keyCode == 'Enter'){
+      btnGrp.click();
+      return false;
+    }
+});
 
 //Form control
 

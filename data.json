@@ -9,21 +9,18 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "Whatsapp",
 					"grupo": "wpp",
 					"group": "",
 					"inicio": "",
@@ -40,14 +37,12 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
@@ -61,7 +56,6 @@
 					"fim": ""
 				},
 				{
-					"titulo": "Mobile",
 					"grupo": "app",
 					"group": "",
 					"inicio": "",
@@ -78,14 +72,12 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
@@ -99,7 +91,6 @@
 					"fim": ""
 				},
 				{
-					"titulo": "Mobile",
 					"grupo": "app",
 					"group": "",
 					"inicio": "",
@@ -116,14 +107,12 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
@@ -140,21 +129,18 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "Whatsapp",
 					"grupo": "wpp",
 					"group": "",
 					"inicio": "",
@@ -171,21 +157,18 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "Whatsapp",
 					"grupo": "wpp",
 					"group": "",
 					"inicio": "",
@@ -202,21 +185,18 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "Whatsapp",
 					"grupo": "wpp",
 					"group": "",
 					"inicio": "",
@@ -233,14 +213,12 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
@@ -257,7 +235,6 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
@@ -271,14 +248,12 @@
 					"fim": ""
 				},
 				{
-					"titulo": "Mobile",
 					"grupo": "app",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "Whatsapp",
 					"grupo": "wpp",
 					"group": "",
 					"inicio": "",
@@ -295,21 +270,18 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "Whatsapp",
 					"grupo": "wpp",
 					"group": "",
 					"inicio": "",
@@ -326,14 +298,12 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
@@ -350,14 +320,12 @@
 			"pre-req": "",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
@@ -374,21 +342,18 @@
 			"pre-req": "DEL-SAP,DEL-NOT",
 			"etapas": [
 				{
-					"titulo": "Entendimento Inicial",
 					"grupo": "lt",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "SAP",
 					"grupo": "sap",
 					"group": "",
 					"inicio": "",
 					"fim": ""
 				},
 				{
-					"titulo": "Whatsapp",
 					"grupo": "wpp",
 					"group": "",
 					"inicio": "",
@@ -459,22 +424,27 @@
 			"duracao": [
 				{
 					"grupo": "lt",
+					"nome": "Entendimento Inicial",
 					"tempo": 14
 				},
 				{
 					"grupo": "sap",
+					"nome": "SAP",
 					"tempo": 36
 				},
 				{
 					"grupo": "agv",
+					"nome": "Agência Virtual",
 					"tempo": 70
 				},
 				{
 					"grupo": "app",
+					"nome": "Aplicativo Mobile",
 					"tempo": 70
 				},
 				{
 					"grupo": "wpp",
+					"nome": "WhatsApp",
 					"tempo": 70
 				}
 			]
@@ -484,22 +454,27 @@
 			"duracao": [
 				{
 					"grupo": "lt",
+					"nome": "Entendimento Inicial",
 					"tempo": 21
 				},
 				{
 					"grupo": "sap",
+					"nome": "SAP",
 					"tempo": 49
 				},
 				{
 					"grupo": "agv",
+					"nome": "Agência Virtual",
 					"tempo": 112
 				},
 				{
 					"grupo": "app",
+					"nome": "Aplicativo Mobile",
 					"tempo": 112
 				},
 				{
 					"grupo": "wpp",
+					"nome": "WhatsApp",
 					"tempo": 91
 				}
 			]
@@ -509,22 +484,27 @@
 			"duracao": [
 				{
 					"grupo": "lt",
+					"nome": "Entendimento Inicial",
 					"tempo": 28
 				},
 				{
 					"grupo": "sap",
+					"nome": "SAP",
 					"tempo": 63
 				},
 				{
 					"grupo": "agv",
+					"nome": "Agência Virtual",
 					"tempo": 112
 				},
 				{
 					"grupo": "app",
+					"nome": "Aplicativo Mobile",
 					"tempo": 112
 				},
 				{
 					"grupo": "wpp",
+					"nome": "WhatsApp",
 					"tempo": 91
 				}
 			]
@@ -534,22 +514,27 @@
 			"duracao": [
 				{
 					"grupo": "lt",
+					"nome": "Entendimento Inicial",
 					"tempo": 28
 				},
 				{
 					"grupo": "sap",
+					"nome": "SAP",
 					"tempo": 77
 				},
 				{
 					"grupo": "agv",
+					"nome": "Agência Virtual",
 					"tempo": 126
 				},
 				{
 					"grupo": "app",
+					"nome": "Aplicativo Mobile",
 					"tempo": 126
 				},
 				{
 					"grupo": "wpp",
+					"nome": "WhatsApp",
 					"tempo": 105
 				}
 			]

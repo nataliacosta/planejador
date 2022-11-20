@@ -72,27 +72,26 @@
         </h3>
         <section>
           <div class="content-wrapper">
-            <h4 class="section-heading">Insira aqui os grupos e suas complexidades </h4>
-            <p class="tagline">Grupos são agrupadores de tarefas do projeto. Exemplo: SAP, Agência Virtual, Whatsapp, etc.</p>
+            <h4 class="section-heading mb-1">Insira aqui os grupos e suas complexidades </h4>
+            <p class="tagline">Grupos são agrupadores de tarefas do projeto. Cada grupo possuirá seu prazo em dias para cada nível de complexidade (baixa, média, alta e altíssima). Exemplo: SAP, Agência Virtual, Whatsapp, etc.</p>
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="" class="sr-only">Nome do Grupo</label>
                 <input type="text" name="nomeGrupo" id="nomeGrupo" class="form-control" placeholder="Nome do Grupo">
               </div>
               <div class="form-group col-md-6">
-                <button class="btn btn-info h-100" style="color: white">
+                <button id="btnGrp" class="btn btn-info h-100" style="color: white">
                   <strong>Adicionar grupo</strong>
                 </button>
               </div>
             </div>
           </div>
-          <div class="content-wrapper mt-5">
+          <div class="content-wrapper mt-5 align-items-center">
             <h4 class="section-heading">Grupos Incluídos</h4>
             <div class="row" id="grupos">
-              <div class="form-group col-md-6 border-0">
-                <div class="text-uppercase d-flex align-items-center border border-success rounded" style="min-height: 50px">
-                  <h6 class="mb-0 text-center w-100 text-success">whatsapp</h6>
-                </div>
+              <div class="form-group col-md-12 border-0">
+                Não há grupos incluídos.
+              </div>
             </div>
           </div>
         </section>
