@@ -8,6 +8,7 @@
     <script src="vis-4.21.0/dist/vis.min.js" ></script>
     <link href="vis-4.21.0/dist/vis.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" ></script>
+    <script src="https://kit.fontawesome.com/8d566c8a14.js" crossorigin="anonymous"></script>
     
     <style>
         li.item {
@@ -54,6 +55,20 @@
             justify-content: space-around;
         }
     </style>
+
+    <!-- script toggle detalhes custos -->
+    <script type="text/javascript">
+        function clickCustos(el) {
+            $('#detalhesCusto').slideToggle();
+            if ($($(el).children()[0]).hasClass('fa-minus')) {
+                $($(el).children()[0]).addClass('fa-plus');
+                $($(el).children()[0]).removeClass('fa-minus');
+            } else {
+                $($(el).children()[0]).addClass('fa-minus');
+                $($(el).children()[0]).removeClass('fa-plus');
+            }
+        }
+    </script>
 </head>
 
 <body class="container-fluid">
@@ -71,6 +86,15 @@
         <div id="custoTotal">
             Custo total do projeto: 
             <span id="custo"></span>
+            <a href="#" onclick="javascript:clickCustos(this);"><i class='fa-solid fa-plus'></i></a>
+        </div>
+        <div class="collapse" id="detalhesCusto">
+            <div class="d-flex flex-column mt-3 mb-3">
+                <div id="custoPorProjeto"></div>
+            </div>
+            <div class="d-flex flex-column mb-3">
+                <div id="custoPorFornecedor"></div>
+            </div>
         </div>
         <div id="mytimeline"></div>
         <div class="container-fluid mt-3">
@@ -204,7 +228,6 @@
                 onAdd: (item, callback) => {
                     if (item.content !== "new item" ) {
                         callback(item);
-                        calcCustos();
                     }
                 }
             };
@@ -259,8 +282,10 @@
                 if ($("#" + idProjeto)[0].children.length == 0) {
                     $("#" + idProjeto).append("<span id='empty'>Não há tarefas disponíveis.</span>");
                 }
+                
+                calcCustos();
             }
-
+/*
             // ACERTA DURAÇÃO AO ITEM
             function handleItemChange(e, obj) {
                 var idProjeto = obj.items[0].split("_")[0];
@@ -279,10 +304,8 @@
                 etapa.group = timeline1.itemSet.items[obj.items].data.group;
                 etapa.inicio = timeline1.itemSet.items[obj.items].data.start;
                 etapa.fim = timeline1.itemSet.items[obj.items].data.end;
-                
-                calcCustos();
             }
-
+*/
             // início custos
             var custosItems = [];
 
@@ -298,47 +321,93 @@
                 var idProjeto = "";
                 var idGrupo = "";
                 var quantMeses = 0;
+                var custProj = {};
+                var custForn = {};
                 items.forEach((item) => {
                     idProjeto = item.id.split("_")[0];
                     idGrupo = item.id.split("_")[1];
                     var inicio = new Date(item.data.start);
                     var fim = new Date(item.data.end);
-
+                    var custItem = {};
                     for (var date = new Date(inicio.getFullYear(), inicio.getMonth(), 1); date < fim; date.setMonth(date.getMonth()+1)) {
                         var dataInicio = (date < inicio ? inicio : date);
                         var dataFim = (date.getMonth() == fim.getMonth() && date.getFullYear() == fim.getFullYear() ? fim : new Date(date.getFullYear(), date.getMonth()+1, 0));
                         var concorrentes = getConcorrentes(date.getFullYear().toString() + ("0" + (date.getMonth() + 1)).slice(-2).toString(),item.data.group);
                         if (concorrentes.length == 0) {
-                            custosItems.push({
+                            var equipe = equipes.filter((e) => { return e.id==item.data.group; })[0];
+                            custItem = {
                                 id: item.id,
                                 group: item.data.group,
                                 mes: date.getFullYear().toString() + ("0" + (date.getMonth() + 1)).slice(-2).toString(),
                                 quantDias: (dataFim.getTime() - dataInicio.getTime()) / (1000 * 3600 * 24),
-                                custo: equipes.filter((e) => {
-                                    return e.id==item.data.group;
-                                })[0].valor_mensal,
-                            });
+                                custo: equipe.valor_mensal,
+                            };
                         } else {
                             var totalDias = concorrentes.reduce((a, o) => { return a + o.quantDias },0) + (dataFim.getTime() - dataInicio.getTime()) / (1000 * 3600 * 24);
                             var valMensal = equipes.find((e) => { return e.id == item.data.group }).valor_mensal;
                             concorrentes.forEach((e) => {
                                 e.custo = valMensal / totalDias * e.quantDias;
                             });
-                            custosItems.push({
+                            custItem = {
                                 id: item.id,
                                 group: item.data.group,
                                 mes: date.getFullYear().toString() + ("0" + (date.getMonth() + 1)).slice(-2).toString(),
                                 quantDias: (dataFim.getTime() - dataInicio.getTime()) / (1000 * 3600 * 24),
                                 custo: valMensal / totalDias * (dataFim.getTime() - dataInicio.getTime()) / (1000 * 3600 * 24)
-                            });
+                            };
                         }
-                    }
+                        custosItems.push(custItem);
+                        var forn = equipes.filter((e => { return e.id == item.data.group }))[0].fornecedor;
+                        custProj[idProjeto] = custProj[idProjeto] ?? [];
+                        custProj[idProjeto].push(custItem);
+                        custForn[forn] = custForn[forn] ?? [];
+                        custForn[forn].push(custItem);
+                  }
                 });
+
+                //plota custo total
                 var custoTotal = custosItems.reduce((a, o) => { return a + o.custo },0);
                 $("#custo").html(custoTotal.toLocaleString('pt-BR', {
                     style: 'currency',
                     currency: 'BRL'
                 }));
+
+                //plota detalhes custo
+                var custoProjHTML = "<h6>Por projeto</h6>";
+                for (var proj in custProj) {
+                    var nomeProj = projetos.find((e) => { return e.id == proj }).titulo;
+                    var totalCost = custProj[proj].reduce((sum, cust) => {
+                        return sum + cust.custo;
+                    },0);
+                    custoProjHTML += "<div class='d-flex'>";
+                    custoProjHTML += "<div class='col-3'>" + nomeProj + "</div>";
+                    custoProjHTML += "<div class='col-1'>" + totalCost.toLocaleString('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }) + "</div>";
+                    custoProjHTML += "</div>";
+                }
+                $("#custoPorProjeto").html(custoProjHTML);
+
+                var custoFornHTML = "<h6>Por fornecedor</h6>";
+                for (var forn in custForn) {
+                    var totalCost = custForn[forn].reduce((sum, cust) => {
+                        return sum + cust.custo;
+                    },0);
+                    custoFornHTML += "<div class='d-flex'>";
+                        custoFornHTML += "<div class='col-3'>" + forn + "</div>";
+                        custoFornHTML += "<div class='col-1'>" + totalCost.toLocaleString('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }) + "</div>";
+                    custoFornHTML += "</div>";
+                }
+                $("#custoPorFornecedor").html(custoFornHTML);
+
+                if (Object.keys(custProj).length == 0) {
+                    $("#custoPorProjeto").html("Não há projetos planejados.");
+                    $("#custoPorFornecedor").empty();
+                }
             }
             calcCustos();
 
