@@ -23,11 +23,11 @@ body {
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: justify;
-          justify-content: space-between;
+  justify-content: space-between;
   margin-bottom: 0; }
   .wizard .steps > ul li {
     width: 270px;
-    max-width: calc(25% - 6px); }
+    max-width: calc(20% - 6px); }
     .wizard .steps > ul li a {
       display: inline-block;
       width: 100%;
