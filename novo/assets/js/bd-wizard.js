@@ -7,17 +7,29 @@ $("#wizard").steps({
     titleTemplate: '#title#',
     startIndex: 1,
     onStepChanging: function (e, i, ni) {
-        if (i == 0) {
-            if (input !== undefined && input.files.length == 0) {
-                alert("Nenhum documento importado.");
-                return false;
-            }
-            if (document.getElementById("titulo").value == "") {
-                alert("Insira o título do projeto.");
-                return false;
-            }
+        switch (i) {
+            case 0: {
+                if (input !== undefined && input.files.length == 0) {
+                    alert("Nenhum documento importado.");
+                    return false;
+                }
+                if (document.getElementById("titulo").value == "") {
+                    alert("Insira o título do projeto.");
+                    return false;
+                }
+                return true;
+            };
+            case 1: {
+                if (!localStorage["grupos"]) {
+                    alert("Nenhum grupo adicionado.");
+                    return false;
+                }
+                return true;
+            };
+            default: {
+                return true;
+            };
         }
-        return true;
     }
 });
 
@@ -82,6 +94,10 @@ btnGrp.addEventListener('click', function (e) {
         html += '</div>';
         var el = document.createElement("div");
         el.innerHTML = html;
+        console.log(grupos.children[0].children.length);
+        if (grupos.children[0].children.length == 0) {
+            grupos.innerHTML = "";
+        }
         grupos.append(el.firstChild);
     }
     document.getElementById("nomeGrupo").value = "";
