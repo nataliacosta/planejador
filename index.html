@@ -265,7 +265,7 @@
                 var projeto = projetos.filter((i) => {
                     return (i.id==idProjeto);
                 })[0];
-                var tempoDev = complexidades.filter((i2) => { return i2.id==projeto.complexidade})[0].duracao[grupo];
+                var tempoDev = complexidades.filter((i2) => { return i2.id==projeto.complexidade})[0].duracao.find((i3) => { return i3.grupo == grupo })["tempo"];
                 var inicio = new Date(timeline1.itemSet.items[event.target.id].data.start);
                 var fim = new Date(inicio);
                 fim.setDate(inicio.getDate() + tempoDev);
@@ -293,7 +293,7 @@
                 var projeto = projetos.filter((n) => {
                     return (n.id==idProjeto);
                 })[0];
-                var tempoDev = complexidades.filter((n2) => { return n2.id==projeto.complexidade})[0].duracao[grupo];
+                var tempoDev = complexidades.filter((i2) => { return i2.id==projeto.complexidade})[0].duracao.find((i3) => { return i3.grupo == grupo })["tempo"];
                 var inicio = new Date(timeline1.itemSet.items[obj.items].data.start);
                 var fim = new Date(inicio);
                 fim.setDate(inicio.getDate() + tempoDev);
