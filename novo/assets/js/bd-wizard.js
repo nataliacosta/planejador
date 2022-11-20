@@ -5,6 +5,7 @@ $("#wizard").steps({
     bodyTag: "section",
     transitionEffect: "none",
     titleTemplate: '#title#',
+    startIndex: 1,
     onStepChanging: function (e, i, ni) {
         if (i == 0) {
             if (input !== undefined && input.files.length == 0) {
