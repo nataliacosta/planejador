@@ -8,7 +8,11 @@ $("#wizard").steps({
     onStepChanging: function (e, i, ni) {
         if (i == 0) {
             if (input !== undefined && input.files.length == 0) {
-                alert("Nenhum documento importado!");
+                alert("Nenhum documento importado.");
+                return false;
+            }
+            if (document.getElementById("titulo").value == "") {
+                alert("Insira o título do projeto.");
                 return false;
             }
         }
