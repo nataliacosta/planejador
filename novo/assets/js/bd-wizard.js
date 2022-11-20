@@ -4,8 +4,40 @@ $("#wizard").steps({
     headerTag: "h3",
     bodyTag: "section",
     transitionEffect: "none",
-    titleTemplate: '#title#'
+    titleTemplate: '#title#',
+    onStepChanging: function (e, i, ni) {
+        if (i == 0) {
+            if (input !== undefined && input.files.length == 0) {
+                alert("Nenhum documento importado!");
+                return false;
+            }
+        }
+        return true;
+    }
 });
+
+//File Upload
+$("#uploadDiv").click(fileUpload);
+
+
+function onChange(event) {
+    var reader = new FileReader();
+    reader.onload = onReaderLoad;
+    reader.readAsText(event.target.files[0]);
+}
+
+function onReaderLoad(event){
+    localStorage.setItem("dataProv", event.target.result);
+    document.getElementById("titulo").setAttribute("value", JSON.parse(localStorage.getItem("dataProv")).titulo);
+}
+var input;
+function fileUpload() {
+    input = document.createElement("input");
+    $(input).attr("type", "file");
+    $(input).attr("id", "uploadFile");
+    input.addEventListener('change', onChange);
+    input.click();
+}
 
 //Form control
 
