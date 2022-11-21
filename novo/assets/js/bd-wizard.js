@@ -5,7 +5,7 @@ $("#wizard").steps({
     bodyTag: "section",
     transitionEffect: "none",
     titleTemplate: '#title#',
-    startIndex: 2,
+    startIndex: 3,
     onStepChanging: function (e, i, ni) {
         switch (i) {
             case 0: {
@@ -29,12 +29,18 @@ $("#wizard").steps({
             };
             case 2: {
                 var diasEmBranco = Array.prototype.slice.call(document.getElementsByName("dias[]"), 0).filter((e) => (e.value == "" || e.value == "0"));
-                console.log(diasEmBranco);
                 if (diasEmBranco.length > 0) {
                     alert("Alguma(s) das durações de complexidade não foi preenchida ou foi preenchida com 0.");
                     return false;
                 }
                 salvaComplexidades();
+                return true;
+            };
+            case 3: {
+                if (!localStorage["equipes"] || localStorage["equipes"] == "[]") {
+                    alert("Nenhuma equipe adicionada.");
+                    return false;
+                }
                 return true;
             };
             default: {
@@ -156,7 +162,7 @@ function atualizaComplexidades() {
             if (i < nomesGrupo.length - 1) {
                 var values = [];
                 var complexidades = (localStorage["complexidades"] ? JSON.parse(localStorage["complexidades"]) : []);
-                html += '<tr class="text-center"><td class="align-middle">' + nomesGrupo[i] + '</td>';
+                html += '<tr class="text-center"><td class="align-middle">' + e + '</td>';
                 for (var ind = 0; ind < tiposComp.length; ind++) {
                     if (complexidades.length > 0) {
                         values.push(complexidades.filter((com) => { return com.id == tiposComp[ind] })[0].duracao.find((d) => {
@@ -182,10 +188,9 @@ function salvaComplexidades() {
     tiposComp.forEach((e, i) => {
         var duracoes = [];
         for (var ind = 0; ind < grupos.length - 1; ind++) {
-            console.log(e + "_" + ind);
             duracoes.push({
-                grupo: i,
-                nome: grupos[i],
+                grupo: ind,
+                nome: grupos[ind],
                 tempo: document.getElementById(e + "_" + ind).valueAsNumber
             });
         }
@@ -199,6 +204,97 @@ function salvaComplexidades() {
 }
 
 //Equipes
+var equipes = JSON.parse(localStorage["equipes"] ?? "[]");
+var equipesDiv = document.getElementById("equipes");
+var html = "";
+equipes.forEach((e) => {
+    html += '<div class="form-group col-md-4 border-0" id="equipe_' + e.id + '" name="equipe" style="cursor: pointer;" listener="false">';
+    html += '<div class="d-flex flex-column align-items-center border border-success rounded" style="min-height: 50px">';
+    html += '<h5 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e.content + '</h5>';
+    html += '<p class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e.fornecedor + '</p>';
+    html += '<p class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e.valor_mensal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'}) + '</p>';
+    html += '</div>';
+    html += '</div>';
+});
+equipesDiv.innerHTML = html;
+
+document.getElementsByName("equipe").forEach((e => {
+    if (e.getAttribute("listener") == "false") {
+        e.addEventListener("click", function (el) {
+            var exc = confirm("Deseja excluir a equipe?");
+            if (exc) {
+                equipes = JSON.parse(localStorage["equipes"] ?? "[]");
+                var id = "";
+                if (el.target.parentNode.parentNode.className.includes("row")) {
+                    id = el.target.parentNode.id.split("_")[1];
+                } else {
+                    id = el.target.parentNode.parentNode.id.split("_")[1];
+                }
+                equipes.splice(id ,1);
+                localStorage["equipes"] = JSON.stringify(equipes);
+                document.getElementById("equipe_" + id).remove();
+            }
+        });
+        e.setAttribute("listener", "true");
+    }
+}));
+
+var btnEqp = document.getElementById("btnEqp");
+btnEqp.addEventListener('click', function (e) {
+    var equipe = document.getElementById("equipeProv").value;
+    var fornecedor = document.getElementById("fornecedorProv").value;
+    var valor = (Number.isNaN(document.getElementById("valorProv").valueAsNumber) ? 0 : document.getElementById("valorProv").valueAsNumber);
+    if (equipe == "" || fornecedor == "") {
+        alert("Insira um valor para os campos equipe e fornecedor.");
+    } else {
+        var equipes = JSON.parse(localStorage["equipes"] ?? "[]");
+        equipes.push({
+            id: equipes.length,
+            content: equipe,
+            fornecedor,
+            valor_mensal: valor
+        });
+        localStorage["equipes"] = JSON.stringify(equipes);
+        var equipesDiv = document.getElementById("equipes");
+        var html = "";
+        html += '<div class="form-group col-md-4 border-0" id="equipe_' + (equipes.length-1) + '" name="equipe" style="cursor: pointer;" listener="false">';
+        html += '<div class="d-flex flex-column align-items-center border border-success rounded" style="min-height: 50px">';
+        html += '<h5 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + equipe + '</h5>';
+        html += '<p class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + fornecedor + '</p>';
+        html += '<p class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'}) + '</p>';
+        html += '</div>';
+        html += '</div>';
+        var el = document.createElement("div");
+        el.innerHTML = html;
+        if (equipesDiv.children[0] && equipesDiv.children[0].children.length == 0) {
+            equipesDiv.innerHTML = "";
+        }
+        equipesDiv.append(el.firstChild);
+        document.getElementById("equipeProv").value = "";
+        document.getElementById("fornecedorProv").value = "";
+        document.getElementById("valorProv").value = "";
+        document.getElementsByName("equipe").forEach((e => {
+            if (e.getAttribute("listener") == "false") {
+                e.addEventListener("click", function (el) {
+                    var exc = confirm("Deseja excluir a equipe?");
+                    if (exc) {
+                        equipes = JSON.parse(localStorage["equipes"] ?? "[]");
+                        var id = "";
+                        if (el.target.parentNode.parentNode.className.includes("row")) {
+                            id = el.target.parentNode.id.split("_")[1];
+                        } else {
+                            id = el.target.parentNode.parentNode.id.split("_")[1];
+                        }
+                        equipes.splice(id ,1);
+                        localStorage["equipes"] = JSON.stringify(equipes);
+                        document.getElementById("equipe_" + id).remove();
+                    }
+                });
+                e.setAttribute("listener", "true");
+            }
+        }));
+    }
+});
 
 
 
