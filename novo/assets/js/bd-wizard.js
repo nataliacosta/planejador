@@ -79,7 +79,11 @@ document.getElementsByName("grupo").forEach((e => {
         var exc = confirm("Deseja excluir o grupo?");
         if (exc) {
             localStorage["grupos"] = localStorage["grupos"].replace(el.target.outerText + "|", "");
-            el.target.parentNode.parentNode.remove();
+            if (el.target.parentNode.parentNode.className.includes("row")) {
+                el.target.parentNode.remove();
+            } else {
+                el.target.parentNode.parentNode.remove();
+            }
         }
     });
 }));
@@ -114,8 +118,7 @@ btnGrp.addEventListener('click', function (e) {
                 var exc = confirm("Deseja excluir o grupo?");
                 if (exc) {
                     localStorage["grupos"] = localStorage["grupos"].replace(el.target.outerText + "|", "");
-                    console.log(el);
-                    el.target.parentNode.parentNode.remove();
+                    el.target.parentNode.remove();
                 }
             });
         }));
