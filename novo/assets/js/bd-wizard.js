@@ -64,7 +64,7 @@ if (localStorage["grupos"] != null) {
     var html = "";
     nomesGrupo.forEach((e, i) => {
         if (i < nomesGrupo.length - 1) {
-            html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;">';
+            html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;" listener="true">';
             html += '<div class="d-flex align-items-center border border-success rounded" style="min-height: 50px">';
             html += '<h6 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + nomesGrupo[i] + '</h6>';
             html += '</div>';
@@ -101,7 +101,7 @@ btnGrp.addEventListener('click', function (e) {
         }
         var grupos = document.getElementById("grupos");
         var html = "";
-        html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;">';
+        html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;" listener="false">';
         html += '<div class="d-flex align-items-center border border-success rounded" style="min-height: 50px">';
         html += '<h6 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + nomeGrupo + '</h6>';
         html += '</div>';
@@ -114,13 +114,20 @@ btnGrp.addEventListener('click', function (e) {
         grupos.append(el.firstChild);
         document.getElementById("nomeGrupo").value = "";
         document.getElementsByName("grupo").forEach((e => {
-            e.addEventListener("click", function (el) {
-                var exc = confirm("Deseja excluir o grupo?");
-                if (exc) {
-                    localStorage["grupos"] = localStorage["grupos"].replace(el.target.outerText + "|", "");
-                    el.target.parentNode.remove();
-                }
-            });
+            if (e.getAttribute("listener") == "false") {
+                e.addEventListener("click", function (el) {
+                    var exc = confirm("Deseja excluir o grupo?");
+                    if (exc) {
+                        localStorage["grupos"] = localStorage["grupos"].replace(el.target.outerText + "|", "");
+                        if (el.target.parentNode.parentNode.className.includes("row")) {
+                            el.target.parentNode.remove();
+                        } else {
+                            el.target.parentNode.parentNode.remove();
+                        }
+                    }
+                });
+                e.setAttribute("listener", "true");
+            }
         }));
     }
 });
