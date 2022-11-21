@@ -5,7 +5,7 @@ $("#wizard").steps({
     bodyTag: "section",
     transitionEffect: "none",
     titleTemplate: '#title#',
-    startIndex: 1,
+    startIndex: 2,
     onStepChanging: function (e, i, ni) {
         switch (i) {
             case 0: {
@@ -24,6 +24,17 @@ $("#wizard").steps({
                     alert("Nenhum grupo adicionado.");
                     return false;
                 }
+                atualizaComplexidades();
+                return true;
+            };
+            case 2: {
+                var diasEmBranco = Array.prototype.slice.call(document.getElementsByName("dias[]"), 0).filter((e) => (e.value == "" || e.value == "0"));
+                console.log(diasEmBranco);
+                if (diasEmBranco.length > 0) {
+                    alert("Alguma(s) das durações de complexidade não foi preenchida ou foi preenchida com 0.");
+                    return false;
+                }
+                salvaComplexidades();
                 return true;
             };
             default: {
@@ -131,6 +142,61 @@ btnGrp.addEventListener('click', function (e) {
         }));
     }
 });
+
+//Complexidades
+atualizaComplexidades();
+function atualizaComplexidades() {
+    var tbodyComplexidades = document.getElementById("tbodyComplexidades");
+    if (localStorage["grupos"] != null && localStorage["grupos"] != "") {
+        var nomesGrupo = localStorage["grupos"].split("|");
+        var html = "";
+        nomesGrupo.forEach((e, i) => {
+            if (i < nomesGrupo.length - 1) {
+                html += 
+                `<tr class="text-center"><td class="align-middle">` + nomesGrupo[i] + `</td>
+                <td>
+                <input type="number" id="baixa_` + i + `" placeholder='' name="dias[]" class="form-control"/> dias corridos
+                </td>
+                <td>
+                  <input type="number" id="media_` + i + `" placeholder='' name="dias[]" class="form-control"/> dias corridos
+                </td>
+                <td>
+                  <input type="number" id="alta_` + i + `" placeholder='' name="dias[]" class="form-control"/> dias corridos
+                </td>
+                <td>
+                  <input type="number" id="altissima_` + i + `" placeholder='' name="dias[]" class="form-control"/> dias corridos
+                </td></tr>`;
+            }
+        });
+        tbodyComplexidades.innerHTML = html;
+    } else {
+        tbodyComplexidades.innerHTML = "<tr class='text-center'><td colspan='5' class='align-middle'>Não há grupos incluídos.</td></tr>";
+    }
+}
+
+var tiposComp = ["baixa", "media", "alta", "altissima"];
+function salvaComplexidades() {
+    var complexidades = [];
+    var grupos = localStorage["grupos"].split("|");
+
+    tiposComp.forEach((e, i) => {
+        var duracoes = [];
+        for (var i = 0; i < grupos.length - 2; i++) {
+            duracoes.push({
+                grupo: i,
+                nome: grupos[i],
+                tempo: document.getElementById(e + "_" + i).valueAsNumber
+            });
+        }
+        complexidades.push({
+            id: e,
+            duracao: duracoes
+        });
+    });
+
+    localStorage.setItem("complexidades", JSON.stringify(complexidades));
+}
+
 
 //Form control
 
