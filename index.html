@@ -156,13 +156,14 @@
                 projPendHTML += "<div class='col-3 mt-2'><h6>" + p.titulo + "</h5> <ul class='items' id='" + p.id + "'>";
                 var temItem = false;
                 p.etapas.forEach((etapa) => {
+                    var titulo = complexidades.find((e) => { return e.grupo == etapa.complexidade}).duracao.find((e2) => { return e2.grupo == etapa.grupo}).nome;
                     if (etapa.group == "") {
                         projPendHTML += "<li id='" 
                                         + p.id 
                                         + "_" 
                                         + etapa.grupo 
                                         + "' draggable='true' class='item' style='word-wrap: break-word;'>" 
-                                        + etapa.titulo + "<br><span class='small'> Complexidade: " 
+                                        + titulo + "<br><span class='small'> Complexidade: " 
                                         + p.complexidade 
                                         + "</span>"
                                         + "</li>";

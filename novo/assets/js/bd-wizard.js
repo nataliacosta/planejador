@@ -64,23 +64,25 @@ if (localStorage["grupos"] != null) {
     var html = "";
     nomesGrupo.forEach((e, i) => {
         if (i < nomesGrupo.length - 1) {
-            html += '<div class="form-group col-md-4 border-0 " name="grupo" style="cursor: pointer;">';
-            html += '<div class="text-uppercase d-flex align-items-center border border-success rounded" style="min-height: 50px">';
+            html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;">';
+            html += '<div class="d-flex align-items-center border border-success rounded" style="min-height: 50px">';
             html += '<h6 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + nomesGrupo[i] + '</h6>';
             html += '</div>';
             html += '</div>';
         }
     });
     grupos.innerHTML = html;
-    document.getElementsByName("grupo").forEach((e => {
-        e.addEventListener("click", function (el) {
-            var exc = confirm("Deseja excluir o grupo?");
-            if (exc) {
-                localStorage["grupos"] = localStorage["grupos"].replace(el.target.childNodes[0].nodeValue + "|", "");
-            }
-        });
-    }));
 }
+
+document.getElementsByName("grupo").forEach((e => {
+    e.addEventListener("click", function (el) {
+        var exc = confirm("Deseja excluir o grupo?");
+        if (exc) {
+            localStorage["grupos"] = localStorage["grupos"].replace(el.target.outerText + "|", "");
+            el.target.parentNode.parentNode.remove();
+        }
+    });
+}));
 
 var btnGrp = document.getElementById("btnGrp");
 btnGrp.addEventListener('click', function (e) {
@@ -95,28 +97,28 @@ btnGrp.addEventListener('click', function (e) {
         }
         var grupos = document.getElementById("grupos");
         var html = "";
-        html += '<div class="form-group col-md-4 border-0">';
-        html += '<div class="text-uppercase d-flex align-items-center border border-success rounded" style="min-height: 50px">';
+        html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;">';
+        html += '<div class="d-flex align-items-center border border-success rounded" style="min-height: 50px">';
         html += '<h6 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + nomeGrupo + '</h6>';
         html += '</div>';
         html += '</div>';
         var el = document.createElement("div");
         el.innerHTML = html;
-        console.log(grupos.children[0].children.length);
-        if (grupos.children[0].children.length == 0) {
+        if (grupos.children[0] && grupos.children[0].children.length == 0) {
             grupos.innerHTML = "";
         }
         grupos.append(el.firstChild);
-    }
-    document.getElementById("nomeGrupo").value = "";
-});
-
-document.getElementById('nomeGrupo').addEventListener('keyup', function(e) {
-    if (!e) e = window.event;
-    var keyCode = e.code || e.key;
-    if (keyCode == 'Enter'){
-      btnGrp.click();
-      return false;
+        document.getElementById("nomeGrupo").value = "";
+        document.getElementsByName("grupo").forEach((e => {
+            e.addEventListener("click", function (el) {
+                var exc = confirm("Deseja excluir o grupo?");
+                if (exc) {
+                    localStorage["grupos"] = localStorage["grupos"].replace(el.target.outerText + "|", "");
+                    console.log(el);
+                    el.target.parentNode.parentNode.remove();
+                }
+            });
+        }));
     }
 });
 
