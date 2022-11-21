@@ -64,7 +64,7 @@ if (localStorage["grupos"] != null) {
     var html = "";
     nomesGrupo.forEach((e, i) => {
         if (i < nomesGrupo.length - 1) {
-            html += '<div class="form-group col-md-4 border-0">';
+            html += '<div class="form-group col-md-4 border-0 " name="grupo" style="cursor: pointer;">';
             html += '<div class="text-uppercase d-flex align-items-center border border-success rounded" style="min-height: 50px">';
             html += '<h6 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + nomesGrupo[i] + '</h6>';
             html += '</div>';
@@ -72,6 +72,14 @@ if (localStorage["grupos"] != null) {
         }
     });
     grupos.innerHTML = html;
+    document.getElementsByName("grupo").forEach((e => {
+        e.addEventListener("click", function (el) {
+            var exc = confirm("Deseja excluir o grupo?");
+            if (exc) {
+                localStorage["grupos"] = localStorage["grupos"].replace(el.target.childNodes[0].nodeValue + "|", "");
+            }
+        });
+    }));
 }
 
 var btnGrp = document.getElementById("btnGrp");
