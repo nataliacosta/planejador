@@ -205,51 +205,17 @@
               <div class="form-group col-md-4">
                 <!-- implementar preencher complexidades -->
                 <label for="compProv" class="sr-only">Complexidade</label>
-                <select id="compProv" name="compProv" class="form-control">
-                  <option value="" disabled selected>Complexidade</option>
-                  <option value="0">Baixa</option>
-                  <option value="1">Média</option>
-                  <option value="2">Alta</option>
-                  <option value="3">Altíssima</option>
+                <select id="compProv" name="compProv" class="form-control text-capitalize">
                 </select>
               </div>
               <div class="form-group col-md-12">
                 <label for="descProv" class="sr-only">Descrição</label>
-                <input type="text" id="descProv" class="form-control mw-100" placeholder="Descrição">
+                <textarea id="descProv" class="form-control mw-100" rows=2 placeholder="Descrição"></textarea>
               </div>
               <div class="form-group col-md-9">
-                <label for="etapasProv">Etapas</label>
-                <div class="d-flex flex-wrap">
-                  <div class="form-check col-md-4">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
-                      Líder Técnica
-                    </label>
-                  </div>
-                  <div class="form-check col-md-4">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
-                      SAP
-                    </label>
-                  </div>
-                  <div class="form-check col-md-4">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
-                      AGV
-                    </label>
-                  </div>
-                  <div class="form-check col-md-4">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
-                      APP
-                    </label>
-                  </div>
-                  <div class="form-check col-md-4">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
-                      Whatsapp
-                    </label>
-                  </div>
+                <label for="etapasProjProv" class="font-weight-bold">Etapas</label>
+                <div class="d-flex flex-wrap" id="etapasProjProv">
+                  Não há etapas cadastradas.
                 </div>
               </div>
               <div class="form-group col-md-3 align-self-center">
@@ -264,63 +230,6 @@
             <div class="row" id="projetos">
               <div class="form-group col-md-12 border-0">
                 Não há projetos incluídos.
-              </div>
-              <div class="form-group col-md-6 border-0" id="equipe_0" name="equipe" style="cursor: pointer;" listener="true">
-                <div class="d-flex flex-column align-items-center border border-success rounded p-1" style="min-height: 50px">
-                  <h5 class="text-center w-100 text-success mt-2" style="word-break: break;"><strong>Nome do Projeto</strong></h5>
-                  <div class="row w-100">
-                    <div class="col-md-6">
-                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">80009999</p>
-                    </div>
-                    <div class="col-md-6">
-                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">Complexidade altíssima</p>
-                    </div>
-                    <div class="col-md-12">
-                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dolor quam. In posuere est vitae nunc volutpat elementum. Fusce eu nulla congue, ultrices enim eget, dictum urna. Mauris dui nibh, viverra eu molestie id, vulputate vitae augue. Suspendisse sit amet augue et ligula laoreet maximus. Vivamus pretium rutrum dictum. Praesent tempor cursus nibh et ultrices. Nulla vehicula purus quis interdum faucibus. Nullam convallis mi eros, vitae ornare est rhoncus maximus.</p>
-                    </div>
-                    <div class="col-md-12">
-                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Etapas:</strong> Líder Técnica, SAP, AGV, APP, Whatsapp</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group col-md-6 border-0" id="equipe_0" name="equipe" style="cursor: pointer;" listener="true">
-                <div class="d-flex flex-column align-items-center border border-success rounded p-1" style="min-height: 50px">
-                  <h5 class="text-center w-100 text-success mt-2" style="word-break: break;"><strong>Nome do Projeto</strong></h5>
-                  <div class="row w-100">
-                    <div class="col-md-6">
-                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">80009999</p>
-                    </div>
-                    <div class="col-md-6">
-                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">Complexidade altíssima</p>
-                    </div>
-                    <div class="col-md-12">
-                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dolor quam. In posuere est vitae nunc volutpat elementum. Fusce eu nulla congue, ultrices enim eget, dictum urna. Mauris dui nibh, viverra eu molestie id, vulputate vitae augue. Suspendisse sit amet augue et ligula laoreet maximus. Vivamus pretium rutrum dictum. Praesent tempor cursus nibh et ultrices. Nulla vehicula purus quis interdum faucibus. Nullam convallis mi eros, vitae ornare est rhoncus maximus.</p>
-                    </div>
-                    <div class="col-md-12">
-                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Etapas:</strong> Líder Técnica, SAP, AGV, APP, Whatsapp</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group col-md-6 border-0" id="equipe_0" name="equipe" style="cursor: pointer;" listener="true">
-                <div class="d-flex flex-column align-items-center border border-success rounded p-1" style="min-height: 50px">
-                  <h5 class="text-center w-100 text-success mt-2" style="word-break: break;"><strong>Nome do Projeto</strong></h5>
-                  <div class="row w-100">
-                    <div class="col-md-6">
-                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">80009999</p>
-                    </div>
-                    <div class="col-md-6">
-                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">Complexidade altíssima</p>
-                    </div>
-                    <div class="col-md-12">
-                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dolor quam. In posuere est vitae nunc volutpat elementum. Fusce eu nulla congue, ultrices enim eget, dictum urna. Mauris dui nibh, viverra eu molestie id, vulputate vitae augue. Suspendisse sit amet augue et ligula laoreet maximus. Vivamus pretium rutrum dictum. Praesent tempor cursus nibh et ultrices. Nulla vehicula purus quis interdum faucibus. Nullam convallis mi eros, vitae ornare est rhoncus maximus.</p>
-                    </div>
-                    <div class="col-md-12">
-                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Etapas:</strong> Líder Técnica, SAP, AGV, APP, Whatsapp</p>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>  
