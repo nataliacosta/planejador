@@ -6,14 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>BootstrapDash Wizard</title>
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/css/bd-wizard2.css">
   <link rel="stylesheet" href="assets/css/bd-wizard.css">
 </head>
 <body>
   <main class="my-5">
-    <div class="container ml-0 mr-0 mw-100" style="padding-left: 7%; padding-right: 7%">
+    <div class="container ml-0 mr-0 mw-100" style="padding-left: 15%; padding-right: 15%">
       <div id="wizard">
         <h3>
           <div class="media">
@@ -191,32 +191,137 @@
         </h3>
         <section>
           <div class="content-wrapper">
-            <h4 class="section-heading mb-5">Accept agreement and Submit</h4>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" checked>
-                I hereby declare that I had read all the <a href="#!">terms and conditions</a>  and all the details provided my me in this form are true.
-              </label>
-            </div>
-          </div>  
-        </section>
-        <h3>
-          <div class="media">
-            <div class="bd-wizard-step-icon"><i class="mdi mdi-emoticon-outline"></i></div>
-            <div class="media-body">
-              <div class="bd-wizard-step-title">Tarefas</div>
-              <div class="bd-wizard-step-subtitle">Passo 6</div>
+            <h4 class="section-heading mb-1">Insira aqui os projetos</h4>
+            <p class="tagline">Projetos são agrupadores de etapas a serem distribuídas no planejamento. Cada projeto deve ter ao menos uma etapa e uma complexidade.</p>          
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label for="projetoProv" class="sr-only">Nome</label>
+                <input type="text" id="equipeProv" class="form-control" placeholder="Nome">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="soProv" class="sr-only">SO</label>
+                <input type="text" id="valorProv" class="form-control" placeholder="SO">
+              </div>
+              <div class="form-group col-md-4">
+                <!-- implementar preencher complexidades -->
+                <label for="compProv" class="sr-only">Complexidade</label>
+                <select id="compProv" name="compProv" class="form-control">
+                  <option value="" disabled selected>Complexidade</option>
+                  <option value="0">Baixa</option>
+                  <option value="1">Média</option>
+                  <option value="2">Alta</option>
+                  <option value="3">Altíssima</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="descProv" class="sr-only">Descrição</label>
+                <input type="text" id="descProv" class="form-control mw-100" placeholder="Descrição">
+              </div>
+              <div class="form-group col-md-9">
+                <label for="etapasProv">Etapas</label>
+                <div class="d-flex flex-wrap">
+                  <div class="form-check col-md-4">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                      Líder Técnica
+                    </label>
+                  </div>
+                  <div class="form-check col-md-4">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                      SAP
+                    </label>
+                  </div>
+                  <div class="form-check col-md-4">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                      AGV
+                    </label>
+                  </div>
+                  <div class="form-check col-md-4">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                      APP
+                    </label>
+                  </div>
+                  <div class="form-check col-md-4">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                      Whatsapp
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-3 align-self-center">
+                <button id="btnPrj" class="btn btn-info w-100" style="color: white">
+                  <strong>Adicionar</strong>
+                </button>
+              </div>
             </div>
           </div>
-        </h3>
-        <section>
-          <div class="content-wrapper">
-            <h4 class="section-heading mb-5">Accept agreement and Submit</h4>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" checked>
-                I hereby declare that I had read all the <a href="#!">terms and conditions</a>  and all the details provided my me in this form are true.
-              </label>
+          <div class="content-wrapper mt-5 align-items-center">
+            <h4 class="section-heading">Projetos Incluídos</h4>
+            <div class="row" id="projetos">
+              <div class="form-group col-md-12 border-0">
+                Não há projetos incluídos.
+              </div>
+              <div class="form-group col-md-6 border-0" id="equipe_0" name="equipe" style="cursor: pointer;" listener="true">
+                <div class="d-flex flex-column align-items-center border border-success rounded p-1" style="min-height: 50px">
+                  <h5 class="text-center w-100 text-success mt-2" style="word-break: break;"><strong>Nome do Projeto</strong></h5>
+                  <div class="row w-100">
+                    <div class="col-md-6">
+                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">80009999</p>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">Complexidade altíssima</p>
+                    </div>
+                    <div class="col-md-12">
+                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dolor quam. In posuere est vitae nunc volutpat elementum. Fusce eu nulla congue, ultrices enim eget, dictum urna. Mauris dui nibh, viverra eu molestie id, vulputate vitae augue. Suspendisse sit amet augue et ligula laoreet maximus. Vivamus pretium rutrum dictum. Praesent tempor cursus nibh et ultrices. Nulla vehicula purus quis interdum faucibus. Nullam convallis mi eros, vitae ornare est rhoncus maximus.</p>
+                    </div>
+                    <div class="col-md-12">
+                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Etapas:</strong> Líder Técnica, SAP, AGV, APP, Whatsapp</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6 border-0" id="equipe_0" name="equipe" style="cursor: pointer;" listener="true">
+                <div class="d-flex flex-column align-items-center border border-success rounded p-1" style="min-height: 50px">
+                  <h5 class="text-center w-100 text-success mt-2" style="word-break: break;"><strong>Nome do Projeto</strong></h5>
+                  <div class="row w-100">
+                    <div class="col-md-6">
+                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">80009999</p>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">Complexidade altíssima</p>
+                    </div>
+                    <div class="col-md-12">
+                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dolor quam. In posuere est vitae nunc volutpat elementum. Fusce eu nulla congue, ultrices enim eget, dictum urna. Mauris dui nibh, viverra eu molestie id, vulputate vitae augue. Suspendisse sit amet augue et ligula laoreet maximus. Vivamus pretium rutrum dictum. Praesent tempor cursus nibh et ultrices. Nulla vehicula purus quis interdum faucibus. Nullam convallis mi eros, vitae ornare est rhoncus maximus.</p>
+                    </div>
+                    <div class="col-md-12">
+                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Etapas:</strong> Líder Técnica, SAP, AGV, APP, Whatsapp</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6 border-0" id="equipe_0" name="equipe" style="cursor: pointer;" listener="true">
+                <div class="d-flex flex-column align-items-center border border-success rounded p-1" style="min-height: 50px">
+                  <h5 class="text-center w-100 text-success mt-2" style="word-break: break;"><strong>Nome do Projeto</strong></h5>
+                  <div class="row w-100">
+                    <div class="col-md-6">
+                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">80009999</p>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="text-center text-success" style="word-break: break; font-size: 10pt;">Complexidade altíssima</p>
+                    </div>
+                    <div class="col-md-12">
+                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dolor quam. In posuere est vitae nunc volutpat elementum. Fusce eu nulla congue, ultrices enim eget, dictum urna. Mauris dui nibh, viverra eu molestie id, vulputate vitae augue. Suspendisse sit amet augue et ligula laoreet maximus. Vivamus pretium rutrum dictum. Praesent tempor cursus nibh et ultrices. Nulla vehicula purus quis interdum faucibus. Nullam convallis mi eros, vitae ornare est rhoncus maximus.</p>
+                    </div>
+                    <div class="col-md-12">
+                      <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Etapas:</strong> Líder Técnica, SAP, AGV, APP, Whatsapp</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>  
         </section>

@@ -5,7 +5,7 @@ $("#wizard").steps({
     bodyTag: "section",
     transitionEffect: "none",
     titleTemplate: '#title#',
-    startIndex: 3,
+    startIndex: 4,
     onStepChanging: function (e, i, ni) {
         switch (i) {
             case 0: {

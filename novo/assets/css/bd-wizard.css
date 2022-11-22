@@ -114,6 +114,8 @@ body {
       color: #919aa3; }
     .wizard .content .form-control::placeholder {
       color: #919aa3; }
+    .wizard .content select.form-control {
+      padding: 0 25px; }
 
 .wizard .actions {
   padding: 0 35px 35px;
