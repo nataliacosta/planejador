@@ -21,14 +21,16 @@ $("#wizard").steps({
             case 0: {
                 if (input !== undefined && input.files.length == 0) {
                     alert("Nenhum documento importado.");
+                    localStorage["passoAtual"] = i;
                     return false;
                 }
                 if (document.getElementById("tituloPlan").value == "") {
-                    alert("Insira o título do projeto.");
+                    alert("Insira o título do planejamento.");
+                    localStorage["passoAtual"] = i;
                     return false;
                 }
                 var data = JSON.parse(localStorage["dataProv"] ?? "[]");
-                if (data != []) {
+                if (Array.isArray(data) && data.length > 0) {
                     localStorage["planejamento"] = data.titulo;
                     localStorage["projetos"] = JSON.stringify(data.projetos);
                     localStorage["equipes"] = JSON.stringify(data.equipes);
@@ -49,6 +51,7 @@ $("#wizard").steps({
             case 1: {
                 if (!localStorage["grupos"] && ni > 1) {
                     alert("Nenhum grupo adicionado.");
+                    localStorage["passoAtual"] = i;
                     return false;
                 }
                 break;
@@ -57,6 +60,7 @@ $("#wizard").steps({
                 var diasEmBranco = Array.prototype.slice.call(document.getElementsByName("dias[]"), 0).filter((e) => (e.value == "" || e.value == "0"));
                 if (diasEmBranco.length > 0 && ni > 2) {
                     alert("Alguma das durações de complexidade não foi preenchida ou foi preenchida com 0.");
+                    localStorage["passoAtual"] = i;
                     return false;
                 }
                 salvaComplexidades();
@@ -65,6 +69,7 @@ $("#wizard").steps({
             case 3: {
                 if ((!localStorage["equipes"] || localStorage["equipes"] == "[]") && ni > 3) {
                     alert("Nenhuma equipe adicionada.");
+                    localStorage["passoAtual"] = i;
                     return false;
                 }
                 break;
@@ -136,7 +141,7 @@ function salvaNomePlanejamento() {
     localStorage["planejamento"] = document.getElementById("tituloPlan").value;
 }
 
-//Grupos
+//Etapas
 var grupos = JSON.parse(localStorage["grupos"] ?? "[]");
 var gruposDiv = document.getElementById("grupos");
 function loadGrupos() {
@@ -235,7 +240,7 @@ function atualizaComplexidades() {
         });
         tbodyComplexidades.innerHTML = html;
     } else {
-        tbodyComplexidades.innerHTML = "<tr class='text-center'><td colspan='5' class='align-middle'>Não há grupos incluídos.</td></tr>";
+        tbodyComplexidades.innerHTML = "<tr class='text-center'><td colspan='5' class='align-middle'>Não há etapas incluídas.</td></tr>";
     }
 }
 
