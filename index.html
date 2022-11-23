@@ -3,14 +3,48 @@
 <head>
     <meta charset="utf-8" />
     <title>Timeline | Drag & Drop</title>
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,500,700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="vis-4.21.0/dist/vis.min.js" ></script>
     <link href="vis-4.21.0/dist/vis.min.css" rel="stylesheet">
+    <link href="novo/assets/css/bd-wizard.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" ></script>
     <script src="https://kit.fontawesome.com/8d566c8a14.js" crossorigin="anonymous"></script>
     
     <style>
+        .main {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .container {
+            background-color: white;
+            position: relative; 
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container::before {    
+            content: "";
+            /*background-image: url('/raphael.PNG');*/
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            opacity: 0.15;
+        }
+        .content {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+        }
         li.item {
             list-style: none;
             width: 100%;
@@ -54,6 +88,9 @@
             display: flex;
             justify-content: space-around;
         }
+        .navbar {
+            background-color: #4a2950;
+        }
     </style>
 
     <!-- script toggle detalhes custos -->
@@ -71,53 +108,69 @@
     </script>
 </head>
 
-<body class="container-fluid">
-    <div id="default">
-        <div class="d-flex flex-row justify-content-between align-items-center">
-            <div class="p-2">
-                <h1 id="tituloPlan">Planejamento Atende e Resolve</h1>
+<body>
+    <main class="container main">
+        <div class="content">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#" id="tituloPlan">Navbar</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto my-2 my-lg-0 justify-content-right">
+                            
+                        </ul>
+                        <ul class="navbar-nav my-2 my-lg-0 justify-content-right">
+                            <li class="nav-item">
+                                <a class="nav-link" href="novo">Novo planejador</a>
+                            </li>
+                            <li class="nav-item">
+                                <input id="file2" type="file" class="d-none"/>
+                                <a class="nav-link" id="upload" href="#">Upload</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="download" href="#">Download</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="salvar" href="#">Salvar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="conteudo px-3" id="conteudo">
+                <div id="custoTotal">
+                    Custo total do projeto: 
+                    <span id="custo"></span>
+                    <a href="#" onclick="javascript:clickCustos(this);"><i class='fa-solid fa-plus'></i></a>
+                </div>
+                <div class="collapse" id="detalhesCusto">
+                    <div class="d-flex flex-column mt-3 mb-3">
+                        <div id="custoPorProjeto"></div>
+                    </div>
+                    <div class="d-flex flex-column mb-3">
+                        <div id="custoPorFornecedor"></div>
+                    </div>
+                </div>
+                <div id="mytimeline"></div>
+                <div class="container-fluid mt-3">
+                    <div class="row">
+                        <div class="col-12 container-fluid">
+                            <h3>Projetos a distribuir</h3>
+                            <div id="projPend" class="row"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="p-2">
-                <input id="file2" type="file" class=""/>
-                <a id="download" href="#">Download</a>
-                <a id="salvar" href="#">Salvar</a>
-            </div>
-        </div>
-        <div id="custoTotal">
-            Custo total do projeto: 
-            <span id="custo"></span>
-            <a href="#" onclick="javascript:clickCustos(this);"><i class='fa-solid fa-plus'></i></a>
-        </div>
-        <div class="collapse" id="detalhesCusto">
-            <div class="d-flex flex-column mt-3 mb-3">
-                <div id="custoPorProjeto"></div>
-            </div>
-            <div class="d-flex flex-column mb-3">
-                <div id="custoPorFornecedor"></div>
-            </div>
-        </div>
-        <div id="mytimeline"></div>
-        <div class="container-fluid mt-3">
-            <div class="row">
-                <div class="col-12 container-fluid">
-                    <h3>Projetos a distribuir</h3>
-                    <div id="projPend" class="row"></div>
+            <div id="nodata" class="d-flex flex-row conteudo p-2 justify-content-between align-items-center d-none">
+                <div class="p-2">
+                    <h1>Não há dados, favor fazer upload.</h1>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="nodata" class="d-flex flex-row justify-content-between align-items-center d-none">
-        <div class="p-2">
-            <h1>Não há dados, favor fazer upload.</h1>
-        </div>
-        <div class="p-2">
-            <input id="file1" type="file" class="" />
-        </div>
-    </div>
-    
+    </main>
     <script type="module">
-
-        document.getElementById("tituloPlan").innerText = "Planejamento " + JSON.parse(localStorage["data"]).titulo;
 
         // lidar com upload de json
         function onChange(event) {
@@ -130,21 +183,23 @@
             localStorage.setItem("data", event.target.result);
             location.reload();
         }
-    
-        document.getElementById('file1').addEventListener('change', onChange);
+        
         document.getElementById('file2').addEventListener('change', onChange);
+        document.getElementById('upload').addEventListener('click', (e) => { document.getElementById('file2').click() });
 
         //inicio
-        var data = localStorage.getItem("data");
+        var data = JSON.parse(localStorage["data"] ?? "[]");
         if (data.length == 0) {
-            $("#default").addClass("d-none");
+            document.getElementById("tituloPlan").innerText = "Planejador";
+            $("#conteudo").addClass("d-none");
             $("#nodata").removeClass("d-none");
         } else {
-            var projetos = JSON.parse(data).projetos;
-            var equipes = JSON.parse(data).equipes;
-            var complexidades = JSON.parse(data).complexidades;
-
-            var retrievedObject = localStorage.getItem('data');
+            var titulo = data.titulo;
+            var projetos = data.projetos;
+            var equipes = data.equipes;
+            var complexidades = data.complexidades;
+            
+            document.getElementById("tituloPlan").innerText = "Planejamento " + titulo;
 
             var groups = new vis.DataSet();
             // adding groups
@@ -339,7 +394,7 @@
                         var dataFim = (date.getMonth() == fim.getMonth() && date.getFullYear() == fim.getFullYear() ? fim : new Date(date.getFullYear(), date.getMonth()+1, 0));
                         var concorrentes = getConcorrentes(date.getFullYear().toString() + ("0" + (date.getMonth() + 1)).slice(-2).toString(),item.data.group);
                         if (concorrentes.length == 0) {
-                            var equipe = equipes.filter((e) => { return e.id==item.data.group; })[0];
+                            var equipe = equipes.find((e) => { return e.id==item.data.group; });
                             custItem = {
                                 id: item.id,
                                 group: item.data.group,
@@ -436,6 +491,7 @@
             //download
             window.fazDownload = () => {
                 const obj = {
+                    "titulo": titulo,
                     "projetos": projetos,
                     "equipes": equipes,
                     "complexidades": complexidades
@@ -459,6 +515,7 @@
             //upload
             window.fazUpload = () => {
                 const obj = {
+                    "titulo": titulo,
                     "projetos": projetos,
                     "equipes": equipes,
                     "complexidades": complexidades
@@ -482,6 +539,7 @@
             //salvar
             window.salvar = () => {
                 const obj = {
+                    "titulo": titulo,
                     "projetos": projetos,
                     "equipes": equipes,
                     "complexidades": complexidades
