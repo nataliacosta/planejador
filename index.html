@@ -75,7 +75,7 @@
     <div id="default">
         <div class="d-flex flex-row justify-content-between align-items-center">
             <div class="p-2">
-                <h1>Planejamento Atende e Resolve</h1>
+                <h1 id="tituloPlan">Planejamento Atende e Resolve</h1>
             </div>
             <div class="p-2">
                 <input id="file2" type="file" class=""/>
@@ -116,6 +116,8 @@
     </div>
     
     <script type="module">
+
+        document.getElementById("tituloPlan").innerText = "Planejamento " + JSON.parse(localStorage["data"]).titulo;
 
         // lidar com upload de json
         function onChange(event) {
