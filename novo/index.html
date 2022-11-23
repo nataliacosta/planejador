@@ -30,7 +30,7 @@
             <div class="row">
               <div class="form-group col-md-6 content text-center">
                 <div class="purpose-radio">
-                  <input type="radio" name="purpose" id="novo" class="purpose-radio-input" value="Novo" checked>
+                  <input type="radio" name="purpose" id="novo" class="purpose-radio-input" value="Novo" checked onclick="javascript:localStorage.removeItem('dataProv');document.getElementById('tituloPlan').value='';">
                 <label for="novo" class="purpose-radio-label">
                   <span class="label-icon">
                     <embed src="assets/images/file-document-plus-outline.png" alt="novo" class="label-icon-default">
@@ -42,7 +42,8 @@
               </div>
               <div class="form-group col-md-6 content text-center">
                   <div class="purpose-radio" id="uploadDiv">
-                    <input type="radio" name="purpose" id="upload" class="purpose-radio-input" value="Upload">
+                    <input id="file2" type="file" class="d-none"/>
+                    <input type="radio" name="purpose" id="upload" class="purpose-radio-input" value="Upload" onclick="javascript:fileUpload()">
                     <label for="upload" class="purpose-radio-label">
                       <span class="label-icon">
                         <embed src="assets/images/file-upload-outline.png" alt="novo" class="label-icon-default">
@@ -56,7 +57,7 @@
             <div class="row">
               <div class="form-group col-12">
                 <label for="titulo" class="sr-only">Título do Projeto</label>
-                <input type="text" name="titulo" id="titulo" class="form-control mw-100" placeholder="Título do Projeto">
+                <input type="text" name="titulo" id="tituloPlan" class="form-control mw-100" placeholder="Título do Projeto">
               </div>
             </div>
           </div>

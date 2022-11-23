@@ -149,19 +149,16 @@
                             </li>
                             <li class="nav-item">
                                 <input id="file2" type="file" class="d-none"/>
-                                <a class="nav-link" id="upload" href="#">Upload</a>
+                                <div class="nav-link" id="upload">Upload</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="download" href="#">Download</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="salvar" href="#">Salvar</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-            <div class="">
+            <div class="" id="conteudo">
                 <div id="custoTotal" class="custos p-3 d-flex align-items-center flex-wrap" onclick="javascript:clickCustos(this);">
                     <div class="col-10">
                         Custo total do projeto: 
@@ -187,9 +184,11 @@
                     </div>
                 </div>
             </div>
-            <div id="nodata" class="d-flex flex-row conteudo p-2 justify-content-between align-items-center d-none">
-                <div class="p-2">
-                    <h1>Não há dados, favor fazer upload.</h1>
+            <div id="nodata" class="d-flex flex-row conteudo p-2 align-items-center d-none">
+                <div class="col-12 text-center py-5">
+                    <h3>Ops... :(</h3>
+                    <h5>Não encontrei nenhum planejador salvo</h5>
+                    <h5>Crie um novo planejador ou faça upload de um existente no menu acima e comece a planejar! :)</h5>
                 </div>
             </div>
         </div>

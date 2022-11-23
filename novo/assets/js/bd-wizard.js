@@ -23,21 +23,35 @@ $("#wizard").steps({
                     alert("Nenhum documento importado.");
                     return false;
                 }
-                if (document.getElementById("titulo").value == "") {
+                if (document.getElementById("tituloPlan").value == "") {
                     alert("Insira o título do projeto.");
                     return false;
                 }
+                var data = JSON.parse(localStorage["dataProv"] ?? "[]");
+                if (data != []) {
+                    localStorage["planejamento"] = data.titulo;
+                    localStorage["projetos"] = JSON.stringify(data.projetos);
+                    localStorage["equipes"] = JSON.stringify(data.equipes);
+                    localStorage["complexidades"] = JSON.stringify(data.complexidades);
+                    var gr = [];
+                    data.complexidades.forEach((e) => {
+                        e.duracao.forEach((d) => {
+                            if (gr.indexOf(d.nome) == -1) {
+                                gr.push(d.nome);
+                            }
+                        })
+                    });
+                    localStorage["grupos"] = JSON.stringify(gr);
+                }
                 salvaNomePlanejamento();
-                return true;
+                break;
             };
             case 1: {
                 if (!localStorage["grupos"] && ni > 1) {
                     alert("Nenhum grupo adicionado.");
                     return false;
                 }
-                atualizaComplexidades();
-                atualizaProjetos();
-                return true;
+                break;
             };
             case 2: {
                 var diasEmBranco = Array.prototype.slice.call(document.getElementsByName("dias[]"), 0).filter((e) => (e.value == "" || e.value == "0"));
@@ -46,18 +60,35 @@ $("#wizard").steps({
                     return false;
                 }
                 salvaComplexidades();
-                return true;
+                break;
             };
             case 3: {
                 if ((!localStorage["equipes"] || localStorage["equipes"] == "[]") && ni > 3) {
                     alert("Nenhuma equipe adicionada.");
                     return false;
                 }
+                break;
+            };
+        }
+        switch (ni) {
+            case 1: {
+                loadGrupos();
                 return true;
             };
-            default: {
+            case 2: {
+                atualizaComplexidades();
+                atualizaProjetos();
                 return true;
             };
+            case 3: {
+                loadEquipes();
+                return true;
+            };
+            case 4: {
+                loadProjetos();
+                return true;
+            };
+            default: { return true; }            
         }
     },
     onFinishing: function (e, i) {
@@ -79,9 +110,8 @@ $("#wizard").steps({
 });
 
 //Criar projeto
-$("#uploadDiv").click(fileUpload);
 
-document.getElementById("titulo").value = localStorage["planejamento"] ?? "";
+document.getElementById("tituloPlan").value = localStorage["planejamento"] ?? "";
 
 function onChange(event) {
     var reader = new FileReader();
@@ -90,8 +120,8 @@ function onChange(event) {
 }
 
 function onReaderLoad(event){
-    localStorage.setItem("dataProv", event.target.result);
-    document.getElementById("titulo").setAttribute("value", JSON.parse(localStorage.getItem("dataProv")).titulo);
+    localStorage["dataProv"] = event.target.result;
+    document.getElementById("tituloPlan").value = JSON.parse(localStorage["dataProv"]).titulo;
 }
 var input;
 function fileUpload() {
@@ -103,28 +133,32 @@ function fileUpload() {
 }
 
 function salvaNomePlanejamento() {
-    localStorage["planejamento"] = document.getElementById("titulo").value;
+    localStorage["planejamento"] = document.getElementById("tituloPlan").value;
 }
 
 //Grupos
-if (localStorage["grupos"] != null) {
-    var grupos = JSON.parse(localStorage["grupos"]);
-    var gruposDiv = document.getElementById("grupos");
-    var html = "";
-    grupos.forEach((e, i) => {
-        html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;" listener="false" id="grupo_' + i + '">';
-        html += '<div class="d-flex align-items-center border border-success rounded" style="min-height: 50px">';
-        html += '<h6 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e + '</h6>';
-        html += '</div>';
-        html += '</div>';
-    });
-    gruposDiv.innerHTML = html;
+var grupos = JSON.parse(localStorage["grupos"] ?? "[]");
+var gruposDiv = document.getElementById("grupos");
+function loadGrupos() {
+    grupos = JSON.parse(localStorage["grupos"] ?? "[]");
+    gruposDiv = document.getElementById("grupos");
+    if (grupos.length > 0) {
+        var html = "";
+        grupos.forEach((e, i) => {
+            html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;" listener="false" id="grupo_' + i + '">';
+            html += '<div class="d-flex align-items-center border border-success rounded" style="min-height: 50px">';
+            html += '<h6 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e + '</h6>';
+            html += '</div>';
+            html += '</div>';
+        });
+        gruposDiv.innerHTML = html;
+    }
 }
 
 function excGrupo(el) {
     var exc = confirm("Deseja excluir o grupo?");
     if (exc) {
-        var grupos = JSON.parse(localStorage["grupos"]);
+        grupos = JSON.parse(localStorage["grupos"]);
         grupos.splice(grupos.indexOf(el.target.outerText), 1);
         var elemento = el.target;
         do {
@@ -148,7 +182,7 @@ btnGrp.addEventListener('click', function (e) {
     if (nomeGrupo == "") {
         alert("Insira um nome para o grupo.");
     } else {
-        var grupos = JSON.parse(localStorage["grupos"] ?? "[]");
+        grupos = JSON.parse(localStorage["grupos"] ?? "[]");
         var gruposDiv = document.getElementById("grupos");
         var html = "";
         html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;" listener="false" id="grupo_' + grupos.length + '">';
@@ -207,7 +241,7 @@ function atualizaComplexidades() {
 
 function salvaComplexidades() {
     var complexidades = [];
-    var grupos = JSON.parse(localStorage["grupos"]);
+    grupos = JSON.parse(localStorage["grupos"] ?? "[]");
 
     tiposComp.forEach((e, i) => {
         var duracoes = [];
@@ -230,19 +264,22 @@ function salvaComplexidades() {
 //Equipes
 var equipes = JSON.parse(localStorage["equipes"] ?? "[]");
 var equipesDiv = document.getElementById("equipes");
-
-if (equipes.length > 0) {
-    var html = "";
-    equipes.forEach((e) => {
-        html += '<div class="form-group col-md-4 border-0" id="equipe_' + e.id + '" name="equipe" style="cursor: pointer;" listener="false">';
-        html += '<div class="d-flex flex-column align-items-center border border-success rounded" style="min-height: 50px">';
-        html += '<h5 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e.content + '</h5>';
-        html += '<p class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e.fornecedor + '</p>';
-        html += '<p class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e.valor_mensal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'}) + '</p>';
-        html += '</div>';
-        html += '</div>';
-    });
-    equipesDiv.innerHTML = html;
+function loadEquipes() {
+    equipes = JSON.parse(localStorage["equipes"] ?? "[]");
+    equipesDiv = document.getElementById("equipes");
+    if (equipes.length > 0) {
+        var html = "";
+        equipes.forEach((e) => {
+            html += '<div class="form-group col-md-4 border-0" id="equipe_' + e.id + '" name="equipe" style="cursor: pointer;" listener="false">';
+            html += '<div class="d-flex flex-column align-items-center border border-success rounded" style="min-height: 50px">';
+            html += '<h5 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e.content + '</h5>';
+            html += '<p class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e.fornecedor + '</p>';
+            html += '<p class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e.valor_mensal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'}) + '</p>';
+            html += '</div>';
+            html += '</div>';
+        });
+        equipesDiv.innerHTML = html;
+    }
 }
 
 function excEquipe(el) {
@@ -314,54 +351,56 @@ btnEqp.addEventListener('click', function (e) {
 //Projetos
 var projetos = JSON.parse(localStorage["projetos"] ?? "[]");
 var projetosDiv = document.getElementById("projetos");
-
-if (projetos.length > 0) {
-    var html = "";
-    projetos.forEach((e) => {
-        var etapasPrj = "";
-        e.etapas.forEach((etapa) => {
-            var etp = JSON.parse(localStorage["grupos"])[etapa.grupo];
-            if (etp) {
-                etapasPrj += etp + ", ";
+function loadProjetos() {
+    projetos = JSON.parse(localStorage["projetos"] ?? "[]");
+    projetosDiv = document.getElementById("projetos");
+    if (projetos.length > 0) {
+        var html = "";
+        projetos.forEach((e) => {
+            var etapasPrj = "";
+            e.etapas.forEach((etapa) => {
+                var etp = JSON.parse(localStorage["grupos"])[etapa.grupo];
+                if (etp) {
+                    etapasPrj += etp + ", ";
+                }
+            });
+            if (etapasPrj == "") {
+                etapasPrj = "Não há etapas nesse projeto, ";
             }
+            etapasPrj += "|";
+            etapasPrj = etapasPrj.replace(", |", "");
+            var SO = (e.SO == "" || e.SO == undefined ? "Sem SO cadastrada" : e.SO);
+            var desc = (e.desc == "" || e.desc == undefined ? "Sem descrição cadastrada" : e.desc);
+            html += `
+            <div class="form-group col-md-6 border-0" id="projeto_` + e.id + `" name="projeto" style="cursor: pointer;" listener="false">
+                <div class="d-flex flex-column align-items-center border border-success rounded p-1" style="min-height: 50px">
+                <h5 class="text-center w-100 text-success mt-2" style="word-break: break;"><strong>` + e.titulo + `</strong></h5>
+                <div class="row w-100">
+                    <div class="col-md-6">
+                        <p class="text-center text-success" style="word-break: break; font-size: 10pt;">` + SO + `</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="text-center text-success" style="word-break: break; font-size: 10pt;">Complexidade ` + e.complexidade + `</p>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Descrição: </strong>`+ desc +`</p>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Etapas: </strong>` + etapasPrj + `</p>
+                    </div>
+                </div>
+                </div>
+            </div>`;
+    
         });
-        if (etapasPrj == "") {
-            etapasPrj = "Não há etapas nesse projeto, ";
-        }
-        etapasPrj += "|";
-        etapasPrj = etapasPrj.replace(", |", "");
-        console.log(e);
-        var SO = (e.SO == "" || e.SO == undefined ? "Sem SO cadastrada" : e.SO);
-        var desc = (e.desc == "" || e.desc == undefined ? "Sem descrição cadastrada" : e.desc);
-        html += `
-        <div class="form-group col-md-6 border-0" id="projeto_` + e.id + `" name="projeto" style="cursor: pointer;" listener="false">
-            <div class="d-flex flex-column align-items-center border border-success rounded p-1" style="min-height: 50px">
-            <h5 class="text-center w-100 text-success mt-2" style="word-break: break;"><strong>` + e.titulo + `</strong></h5>
-            <div class="row w-100">
-                <div class="col-md-6">
-                    <p class="text-center text-success" style="word-break: break; font-size: 10pt;">` + SO + `</p>
-                </div>
-                <div class="col-md-6">
-                    <p class="text-center text-success" style="word-break: break; font-size: 10pt;">Complexidade ` + e.complexidade + `</p>
-                </div>
-                <div class="col-md-12">
-                    <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Descrição: </strong>`+ desc +`</p>
-                </div>
-                <div class="col-md-12">
-                    <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Etapas: </strong>` + etapasPrj + `</p>
-                </div>
-            </div>
-            </div>
-        </div>`;
-
-    });
-    projetosDiv.innerHTML = html;
-    document.getElementsByName("projeto").forEach((e => {
-        if (e.getAttribute("listener") == "false") {
-            e.addEventListener("click", excProj);
-            e.setAttribute("listener", "true");
-        }
-    }));
+        projetosDiv.innerHTML = html;
+        document.getElementsByName("projeto").forEach((e => {
+            if (e.getAttribute("listener") == "false") {
+                e.addEventListener("click", excProj);
+                e.setAttribute("listener", "true");
+            }
+        }));
+    }
 }
 
 function excProj(el) {
@@ -412,7 +451,7 @@ btnPrj.addEventListener('click', function (e) {
     var etapas = JSON.parse(localStorage["grupos"] ?? "[]");
     var etapasSelecionadas = Array.prototype.slice.call(document.getElementsByName("etapasProj")).filter((e2) => { return e2.checked });
     var html = "";
-    if (nomeProjeto == "" || SO == "" || complexidade == "" || descricao == "" || etapas.length == 0) {
+    if (nomeProjeto == "" || SO == "" || complexidade == "" || descricao == "" || etapasSelecionadas.length == 0) {
         alert("Insira um valor para todos os campos do projeto.");
     } else {
         var projetos = JSON.parse(localStorage["projetos"] ?? "[]");
@@ -481,39 +520,3 @@ btnPrj.addEventListener('click', function (e) {
         });
     }
 });
-
-
-//Form control
-
-$('#firstName').on('change', function(e) {
-    $('#enteredFirstName').text(e.target.value || 'Cha');
-});
-
-$('#lastName').on('change', function(e) {
-    $('#enteredLastName').text(e.target.value || 'Ji-Hun C');
-});
-
-$('#phoneNumber').on('change', function(e) {
-    $('#enteredPhoneNumber').text(e.target.value || '+230-582-6609');
-});
-
-$('#emailAddress').on('change', function(e) {
-    $('#enteredEmailAddress').text(e.target.value || 'willms_abby@gmail.com');
-});
-
-$('#designation').on('change', function(e) {
-    $('#enteredDesignation').text(e.target.value || 'Junior Developer');
-});
-
-$('#department').on('change', function(e) {
-    $('#enteredDepartment').text(e.target.value || 'UI Development');
-});
-
-$('#employeeNumber').on('change', function(e) {
-    $('#enteredEmployeeNumber').text(e.target.value || 'JDUI36849');
-});
-
-$('#workEmailAddress').on('change', function(e) {
-    $('#enteredWorkEmailAddress').text(e.target.value || 'willms_abby@company.com');
-});
-

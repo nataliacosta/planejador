@@ -55,7 +55,7 @@ if (data.length == 0) {
         var temItem = false;
         p.etapas.forEach((etapa) => {
             var titulo = complexidades.find((e) => { return e.grupo == etapa.complexidade}).duracao.find((e2) => { return e2.grupo == etapa.grupo}).nome;
-            if (etapa.group == "") {
+            if (etapa.group === "") {
                 projPendHTML += "<li id='" 
                                 + p.id 
                                 + "_" 
@@ -348,42 +348,4 @@ if (data.length == 0) {
     }
 
     $("#download").attr("onclick", "fazDownload()");
-    
-    //upload
-    window.fazUpload = () => {
-        const obj = {
-            "titulo": titulo,
-            "projetos": projetos,
-            "equipes": equipes,
-            "complexidades": complexidades
-        };
-
-        const text = JSON.stringify(obj, null, "\t");
-        const name = "data.json";
-        const type = "text/plain";
-
-        const a = document.createElement("a");
-        const file = new Blob([text], { type: type });
-        a.href = URL.createObjectURL(file);
-        a.download = name;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-    }
-
-    $("#download").attr("onclick", "fazDownload()");
-
-    //salvar
-    window.salvar = () => {
-        const obj = {
-            "titulo": titulo,
-            "projetos": projetos,
-            "equipes": equipes,
-            "complexidades": complexidades
-        };
-        const text = JSON.stringify(obj, null, "\t");
-        localStorage.setItem("data", text);
-    }
-
-    $("#salvar").attr("onclick", "salvar()");
 }
