@@ -79,7 +79,7 @@ body {
 .wizard .content {
   padding: 75px 35px 20px 35px;
   background-color: #fff;
-  min-height: 420px; }
+  min-height: 410px; }
   @media (max-width: 767px) {
     .wizard .content {
       padding-left: 20px;

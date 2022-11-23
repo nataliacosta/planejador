@@ -9,6 +9,12 @@ $("#wizard").steps({
     titleTemplate: '#title#',
     startIndex: indexInicial,
     transitionEffect: 1,
+    labels: {
+        previous: "Voltar",
+        next: "Avançar",
+        finish: "Finalizar",
+        loading: "Carregando ..."
+    },
     onStepChanging: function (e, i, ni) {
         localStorage["passoAtual"] = ni;
         switch (i) {
@@ -25,7 +31,7 @@ $("#wizard").steps({
                 return true;
             };
             case 1: {
-                if (!localStorage["grupos"]) {
+                if (!localStorage["grupos"] && ni > 1) {
                     alert("Nenhum grupo adicionado.");
                     return false;
                 }
@@ -35,7 +41,7 @@ $("#wizard").steps({
             };
             case 2: {
                 var diasEmBranco = Array.prototype.slice.call(document.getElementsByName("dias[]"), 0).filter((e) => (e.value == "" || e.value == "0"));
-                if (diasEmBranco.length > 0) {
+                if (diasEmBranco.length > 0 && ni > 2) {
                     alert("Alguma das durações de complexidade não foi preenchida ou foi preenchida com 0.");
                     return false;
                 }
@@ -43,7 +49,7 @@ $("#wizard").steps({
                 return true;
             };
             case 3: {
-                if (!localStorage["equipes"] || localStorage["equipes"] == "[]") {
+                if ((!localStorage["equipes"] || localStorage["equipes"] == "[]") && ni > 3) {
                     alert("Nenhuma equipe adicionada.");
                     return false;
                 }
@@ -105,8 +111,8 @@ if (localStorage["grupos"] != null) {
     var grupos = JSON.parse(localStorage["grupos"]);
     var gruposDiv = document.getElementById("grupos");
     var html = "";
-    grupos.forEach((e) => {
-        html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;" listener="true">';
+    grupos.forEach((e, i) => {
+        html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;" listener="false" id="grupo_' + i + '">';
         html += '<div class="d-flex align-items-center border border-success rounded" style="min-height: 50px">';
         html += '<h6 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + e + '</h6>';
         html += '</div>';
@@ -120,12 +126,15 @@ function excGrupo(el) {
     if (exc) {
         var grupos = JSON.parse(localStorage["grupos"]);
         grupos.splice(grupos.indexOf(el.target.outerText), 1);
+        var elemento = el.target;
+        do {
+            elemento = elemento.parentNode;
+        } while (!elemento.id || (elemento.id && !elemento.id.includes("grupo_")));
+        var id = elemento.id.replace("grupo_", "");
+        var index = grupos.indexOf(grupos.find((p) => { return p["id"] == id }));
+        equipes.splice(index ,1);
         localStorage["grupos"] = JSON.stringify(grupos);
-        if (el.target.parentNode.parentNode.className.includes("row")) {
-            el.target.parentNode.remove();
-        } else {
-            el.target.parentNode.parentNode.remove();
-        }
+        document.getElementById("grupo_" + id).remove();
     }
 }
 
@@ -140,11 +149,9 @@ btnGrp.addEventListener('click', function (e) {
         alert("Insira um nome para o grupo.");
     } else {
         var grupos = JSON.parse(localStorage["grupos"] ?? "[]");
-        grupos.push(nomeGrupo);
-        localStorage["grupos"] = JSON.stringify(grupos);
         var gruposDiv = document.getElementById("grupos");
         var html = "";
-        html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;" listener="false">';
+        html += '<div class="form-group col-md-4 border-0" name="grupo" style="cursor: pointer;" listener="false" id="grupo_' + grupos.length + '">';
         html += '<div class="d-flex align-items-center border border-success rounded" style="min-height: 50px">';
         html += '<h6 class="mb-0 text-center w-100 text-success" style="word-break: break-all;">' + nomeGrupo + '</h6>';
         html += '</div>';
@@ -161,6 +168,8 @@ btnGrp.addEventListener('click', function (e) {
                 e.addEventListener("click", excGrupo);
             }
         }));
+        grupos.push(nomeGrupo);
+        localStorage["grupos"] = JSON.stringify(grupos);
     }
 });
 
@@ -244,9 +253,11 @@ function excEquipe(el) {
         do {
             elemento = elemento.parentNode;
         } while (!elemento.id.includes("equipe_"));
-        equipes.splice(id ,1);
-        localStorage["equipes"] = JSON.stringify(equipes);
+        var id = elemento.id.replace("equipe_", "");
+        var index = equipes.indexOf(equipes.find((p) => { return p["id"] == id }));
         document.getElementById("equipe_" + id).remove();
+        equipes.splice(index ,1);
+        localStorage["equipes"] = JSON.stringify(equipes);
     }
 }
 
@@ -344,6 +355,12 @@ if (projetos.length > 0) {
 
     });
     projetosDiv.innerHTML = html;
+    document.getElementsByName("projeto").forEach((e => {
+        if (e.getAttribute("listener") == "false") {
+            e.addEventListener("click", excProj);
+            e.setAttribute("listener", "true");
+        }
+    }));
 }
 
 function excProj(el) {
@@ -356,18 +373,11 @@ function excProj(el) {
         } while (!elemento.id.includes("projeto_"));
         var id = elemento.id.replace("projeto_", "");
         var index = projetos.indexOf(projetos.find((p) => { return p["id"] == id }));
-        projetos.splice(index,1);
         document.getElementById("projeto_" + id).remove();
+        projetos.splice(index ,1);
         localStorage["projetos"] = JSON.stringify(projetos);
     }
 }
-
-document.getElementsByName("projeto").forEach((e => {
-    if (e.getAttribute("listener") == "false") {
-        e.addEventListener("click", excProj);
-        e.setAttribute("listener", "true");
-    }
-}));
 
 atualizaProjetos();
 function atualizaProjetos() {
@@ -394,13 +404,12 @@ function atualizaProjetos() {
 
 var btnPrj = document.getElementById("btnPrj");
 btnPrj.addEventListener('click', function (e) {
-    var projetosDiv = document.getElementById("projetos");
     var nomeProjeto = document.getElementById("projetoProv").value;
     var SO = document.getElementById("soProv").value;
     var complexidade = document.getElementById("compProv").value;
     var descricao = document.getElementById("descProv").value;
     var etapas = JSON.parse(localStorage["grupos"] ?? "[]");
-    var etapasSelecionadas = Array.prototype.slice.call(document.getElementsByName("etapasProj")).filter((e) => { return e.checked });
+    var etapasSelecionadas = Array.prototype.slice.call(document.getElementsByName("etapasProj")).filter((e2) => { return e2.checked });
     var html = "";
     if (nomeProjeto == "" || SO == "" || complexidade == "" || descricao == "" || etapas.length == 0) {
         alert("Insira um valor para todos os campos do projeto.");
@@ -409,7 +418,7 @@ btnPrj.addEventListener('click', function (e) {
         var etapasProj = [];
         var strEtapas = "";
         etapasSelecionadas.forEach((etapa) => {
-            strEtapas += etapas[etapa.valueAsNumber] + ", ";
+            strEtapas += etapas[parseInt(etapa.value)] + ", ";
             etapasProj.push({
                 grupo: etapa.value,
                 group: "",
@@ -430,32 +439,31 @@ btnPrj.addEventListener('click', function (e) {
             etapas: etapasProj
         });
         localStorage["projetos"] = JSON.stringify(projetos);
-        html += `
-        <div class="form-group col-md-6 border-0" id="projeto_` + projetos.length + `" name="projeto" style="cursor: pointer;" listener="false">
-            <div class="d-flex flex-column align-items-center border border-success rounded p-1" style="min-height: 50px">
-                <h5 class="text-center w-100 text-success mt-2" style="word-break: break;"><strong>` + nomeProjeto + `</strong></h5>
-                <div class="row w-100">
-                    <div class="col-md-6">
-                        <p class="text-center text-success" style="word-break: break; font-size: 10pt;">` + SO + `</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p class="text-center text-success" style="word-break: break; font-size: 10pt;">Complexidade ` + complexidade + `</p>
-                    </div>
-                    <div class="col-md-12">
-                        <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Descrição: </strong>`+ descricao +`</p>
-                    </div>
-                    <div class="col-md-12">
-                        <p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Etapas: </strong>` + strEtapas + `</p>
-                    </div>
-                </div>
-            </div>
-        </div>`;
+        html += '<div class="form-group col-md-6 border-0" id="projeto_' + projetos.length + '" name="projeto" style="cursor: pointer;" listener="false">';
+        html += '<div class="d-flex flex-column align-items-center border border-success rounded p-1" style="min-height: 50px">';
+        html += '<h5 class="text-center w-100 text-success mt-2" style="word-break: break;"><strong>' + nomeProjeto + '</strong></h5>';
+        html += '<div class="row w-100">';
+        html += '<div class="col-md-6">';
+        html += '<p class="text-center text-success" style="word-break: break; font-size: 10pt;">' + SO + '</p>';
+        html += '</div>';
+        html += '<div class="col-md-6">';
+        html += '<p class="text-center text-success" style="word-break: break; font-size: 10pt;">Complexidade ' + complexidade + '</p>';
+        html += '</div>';
+        html += '<div class="col-md-12">';
+        html += '<p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Descrição: </strong>'+ descricao +'</p>';
+        html += '</div>';
+        html += '<div class="col-md-12">';
+        html += '<p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Etapas: </strong>' + strEtapas + '</p>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
         var el = document.createElement("div");
         el.innerHTML = html;
-        if (projetosDiv.children[0] && projetosDiv.children[0].children.length == 0) {
+        if (projetosDiv.children[0] && !projetosDiv.children[0].id) {
             projetosDiv.innerHTML = "";
         }
-        projetosDiv.innerHTML += html;
+        projetosDiv.append(el.firstChild);
         document.getElementById("projetoProv").value = "";
         document.getElementById("soProv").value = "";
         document.getElementById("compProv").value = "";
@@ -463,12 +471,12 @@ btnPrj.addEventListener('click', function (e) {
         document.getElementsByName("etapasProj").forEach((e) => {
             e.checked = false;
         });
-        document.getElementsByName("projeto").forEach((e => {
+        document.getElementsByName("projeto").forEach((e) => {
             if (e.getAttribute("listener") == "false") {
                 e.addEventListener("click", excProj);
                 e.setAttribute("listener", "true");
             }
-        }));
+        });
     }
 });
 
