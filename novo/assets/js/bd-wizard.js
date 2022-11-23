@@ -29,8 +29,8 @@ $("#wizard").steps({
                     localStorage["passoAtual"] = i;
                     return false;
                 }
-                var data = JSON.parse(localStorage["dataProv"] ?? "[]");
-                if (Array.isArray(data) && data.length > 0) {
+                var data = JSON.parse(localStorage["dataProv"] ?? "{}");
+                if (Object.keys(data).length > 0) {
                     localStorage["planejamento"] = data.titulo;
                     localStorage["projetos"] = JSON.stringify(data.projetos);
                     localStorage["equipes"] = JSON.stringify(data.equipes);
@@ -43,14 +43,16 @@ $("#wizard").steps({
                             }
                         })
                     });
-                    localStorage["grupos"] = JSON.stringify(gr);
+                    if (gr.length > 0) {
+                        localStorage["grupos"] = JSON.stringify(gr);
+                    }
                 }
                 salvaNomePlanejamento();
                 break;
             };
             case 1: {
                 if (!localStorage["grupos"] && ni > 1) {
-                    alert("Nenhum grupo adicionado.");
+                    alert("Nenhuma etapa adicionada.");
                     localStorage["passoAtual"] = i;
                     return false;
                 }
@@ -156,8 +158,10 @@ function loadGrupos() {
             html += '</div>';
             html += '</div>';
         });
-        gruposDiv.innerHTML = html;
+    } else {
+        html = '<div class="form-group col-md-12 border-0"> Não há etapas incluídas.</div>';
     }
+    gruposDiv.innerHTML = html;
 }
 
 function excGrupo(el) {
@@ -283,8 +287,10 @@ function loadEquipes() {
             html += '</div>';
             html += '</div>';
         });
-        equipesDiv.innerHTML = html;
+    } else {
+        html = '<div class="form-group col-md-12 border-0">Não há equipes incluídas.</div>';
     }
+    equipesDiv.innerHTML = html;
 }
 
 function excEquipe(el) {
@@ -398,14 +404,16 @@ function loadProjetos() {
             </div>`;
     
         });
-        projetosDiv.innerHTML = html;
         document.getElementsByName("projeto").forEach((e => {
             if (e.getAttribute("listener") == "false") {
                 e.addEventListener("click", excProj);
                 e.setAttribute("listener", "true");
             }
         }));
+    } else {
+        html = '<div class="form-group col-md-12 border-0">Não há projetos incluídos.</div>';
     }
+    projetosDiv.innerHTML = html;
 }
 
 function excProj(el) {
