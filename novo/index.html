@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BootstrapDash Wizard</title>
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="assets/css/bd-wizard2.css">
+  <link rel="stylesheet" href="assets/css/bd-wizard.css">
+</head>
+<body>
+  <main class="my-5">
+    <div class="container ml-0 mr-0 mw-100" style="padding-left: 15%; padding-right: 15%">
+      <div id="wizard">
+        <h3>
+          <div class="media">
+            <div class="bd-wizard-step-icon"><i class="mdi mdi-file-document-outline"></i></div>
+            <div class="media-body">
+              <div class="bd-wizard-step-title">Criar Projeto</div>
+              <div class="bd-wizard-step-subtitle">Passo 1</div>
+            </div>
+          </div>
+        </h3>
+        <section>
+          <div class="content-wrapper">
+            <h4 class="section-heading">Selecione uma opção </h4>
+            <div class="row">
+              <div class="form-group col-md-6 content text-center">
+                <div class="purpose-radio">
+                  <input type="radio" name="purpose" id="novo" class="purpose-radio-input" value="Novo" checked onclick="javascript:localStorage.removeItem('dataProv');document.getElementById('tituloPlan').value='';">
+                <label for="novo" class="purpose-radio-label">
+                  <span class="label-icon">
+                    <embed src="assets/images/file-document-plus-outline.png" alt="novo" class="label-icon-default">
+                    <embed src="assets/images/file-document-plus-outline_green.png" alt="novo" class="label-icon-active">
+                  </span>
+                  <span class="label-text">Novo Projeto</span>
+                </label>
+                </div>
+              </div>
+              <div class="form-group col-md-6 content text-center">
+                  <div class="purpose-radio" id="uploadDiv">
+                    <input id="file2" type="file" class="d-none"/>
+                    <input type="radio" name="purpose" id="upload" class="purpose-radio-input" value="Upload" onclick="javascript:fileUpload()">
+                    <label for="upload" class="purpose-radio-label">
+                      <span class="label-icon">
+                        <embed src="assets/images/file-upload-outline.png" alt="novo" class="label-icon-default">
+                        <embed src="assets/images/file-upload-outline_green.png" alt="novo" id="uploadSelected" class="label-icon-active">
+                      </span>
+                      <span class="label-text">Upload</span>
+                    </label>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-12">
+                <label for="titulo" class="sr-only">Título do Projeto</label>
+                <input type="text" name="titulo" id="tituloPlan" class="form-control mw-100" placeholder="Título do Projeto">
+              </div>
+            </div>
+          </div>
+        </section>
+        <h3>
+          <div class="media">
+            <div class="bd-wizard-step-icon"><i class="mdi mdi-format-list-group"></i></div>
+            <div class="media-body">
+              <div class="bd-wizard-step-title">Grupos</div>
+              <div class="bd-wizard-step-subtitle">Passo 2</div>
+            </div>
+          </div>
+        </h3>
+        <section>
+          <div class="content-wrapper">
+            <h4 class="section-heading mb-1">Insira aqui os grupos do planejamento</h4>
+            <p class="tagline">Grupos, assim como projetos e equipes, são agrupadores de tarefas do projeto. Cada grupo possuirá seu prazo em dias para cada nível de complexidade (baixa, média, alta e altíssima). Exemplo: SAP, Agência Virtual, Whatsapp, etc.</p>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="" class="sr-only">Nome do Grupo</label>
+                <input type="text" name="nomeGrupo" id="nomeGrupo" class="form-control" placeholder="Nome do Grupo">
+              </div>
+              <div class="form-group col-md-6">
+                <button id="btnGrp" class="btn btn-info h-100" style="color: white">
+                  <strong>Adicionar grupo</strong>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="content-wrapper mt-5 align-items-center">
+            <h4 class="section-heading">Grupos Incluídos</h4>
+            <div class="row" id="grupos">
+              <div class="form-group col-md-12 border-0">
+                Não há grupos incluídos.
+              </div>
+            </div>
+          </div>
+        </section>
+        <h3>
+          <div class="media">
+            <div class="bd-wizard-step-icon"><i class="mdi mdi-clock-outline"></i></div>
+            <div class="media-body">
+              <div class="bd-wizard-step-title">Complexidades</div>
+              <div class="bd-wizard-step-subtitle">Passo 3</div>
+            </div>
+          </div>
+        </h3>
+        <section>
+          <div class="content-wrapper">
+            <h4 class="section-heading mb-1">Insira aqui as complexidades do planejamento </h4>
+            <p class="tagline">Complexidades são divididas em baixa, média, alta e altíssima, e nortearão a duração de cada tarefa do projeto. A duração deve ser incluída por dias corridos, e cada complexidade deve ter uma duração para cada grupo cadastrado.</p>
+            
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <table class="table table-bordered table-hover" id="tabelaComplexidades">
+                  <thead>
+                    <tr>
+                      <th class="text-center align-middle">
+                        Grupo
+                      </th>
+                      <th class="text-center align-middle">
+                        Complexidade baixa
+                      </th>
+                      <th class="text-center align-middle">
+                        Complexidade média
+                      </th>
+                      <th class="text-center align-middle">
+                        Complexidade alta
+                      </th>
+                      <th class="text-center align-middle">
+                        Complexidade altíssima
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbodyComplexidades">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+        <h3>
+          <div class="media">
+            <div class="bd-wizard-step-icon"><i class="mdi mdi-account-group-outline"></i></div>
+            <div class="media-body">
+              <div class="bd-wizard-step-title">Equipes</div>
+              <div class="bd-wizard-step-subtitle">Passo 4</div>
+            </div>
+          </div>
+        </h3>
+        <section>
+          <div class="content-wrapper">
+            <h4 class="section-heading mb-1">Insira aqui as equipes</h4>
+            <p class="tagline">Equipes são os times que atuarão nos projetos do planejamento. Equipes têm um fornecedor designado e um valor mensal de custo.</p>
+            <div class="row">
+              <div class="form-group col-md-3">
+                <label for="equipeProv" class="sr-only">Equipe</label>
+                <input type="text" id="equipeProv" class="form-control" placeholder="Equipe">
+              </div>
+              <div class="form-group col-md-3">
+                <label for="fornecedorProv" class="sr-only">Fornecedor</label>
+                <input type="text" id="fornecedorProv" class="form-control" placeholder="Fornecedor">
+              </div>
+              <div class="form-group col-md-3">
+                <label for="valorProv" class="sr-only">Valor mensal</label>
+                <input type="number" id="valorProv" class="form-control" placeholder="R$ Mensal">
+              </div>
+              <div class="form-group col-md-3">
+                <button id="btnEqp" class="btn btn-info h-100 w-100" style="color: white">
+                  <strong>Adicionar</strong>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="content-wrapper mt-5 align-items-center">
+            <h4 class="section-heading">Equipes Incluídas</h4>
+            <div class="row" id="equipes">
+              <div class="form-group col-md-12 border-0">
+                Não há equipes incluídas.
+              </div>
+            </div>
+          </div>
+        </section>
+        <h3>
+          <div class="media">
+            <div class="bd-wizard-step-icon"><i class="mdi mdi-text-box-check-outline"></i></div>
+            <div class="media-body">
+              <div class="bd-wizard-step-title">Projetos</div>
+              <div class="bd-wizard-step-subtitle">Passo 5</div>
+            </div>
+          </div>
+        </h3>
+        <section>
+          <div class="content-wrapper">
+            <h4 class="section-heading mb-1">Insira aqui os projetos</h4>
+            <p class="tagline">Projetos são agrupadores de etapas a serem distribuídas no planejamento. Cada projeto deve ter ao menos uma etapa e uma complexidade.</p>          
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label for="projetoProv" class="sr-only">Nome</label>
+                <input type="text" id="projetoProv" class="form-control" placeholder="Nome">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="soProv" class="sr-only">SO</label>
+                <input type="number" id="soProv" class="form-control" placeholder="SO">
+              </div>
+              <div class="form-group col-md-4">
+                <!-- implementar preencher complexidades -->
+                <label for="compProv" class="sr-only">Complexidade</label>
+                <select id="compProv" name="compProv" class="form-control text-capitalize">
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="descProv" class="sr-only">Descrição</label>
+                <textarea id="descProv" class="form-control mw-100" rows=2 placeholder="Descrição"></textarea>
+              </div>
+              <div class="form-group col-md-9">
+                <label for="etapasProjProv" class="font-weight-bold">Etapas</label>
+                <div class="d-flex flex-wrap" id="etapasProjProv">
+                  Não há etapas cadastradas.
+                </div>
+              </div>
+              <div class="form-group col-md-3 align-self-center">
+                <button id="btnPrj" class="btn btn-info w-100" style="color: white">
+                  <strong>Adicionar</strong>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="content-wrapper mt-5 align-items-center">
+            <h4 class="section-heading">Projetos Incluídos</h4>
+            <div class="row" id="projetos">
+              <div class="form-group col-md-12 border-0">
+                Não há projetos incluídos.
+              </div>
+            </div>
+          </div>  
+        </section>
+      </div>
+    </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="assets/js/jquery.steps.min.js"></script>
+  <script src="assets/js/bd-wizard.js"></script>
+</body>
+</html>
