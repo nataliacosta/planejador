@@ -330,7 +330,8 @@ if (projetos.length > 0) {
         }
         etapasPrj += "|";
         etapasPrj = etapasPrj.replace(", |", "");
-        var SO = (e.SO == "" || e.so == undefined ? "Sem SO cadastrada" : e.SO);
+        console.log(e);
+        var SO = (e.SO == "" || e.SO == undefined ? "Sem SO cadastrada" : e.SO);
         var desc = (e.desc == "" || e.desc == undefined ? "Sem descrição cadastrada" : e.desc);
         html += `
         <div class="form-group col-md-6 border-0" id="projeto_` + e.id + `" name="projeto" style="cursor: pointer;" listener="false">
@@ -436,6 +437,7 @@ btnPrj.addEventListener('click', function (e) {
             titulo: nomeProjeto,
             SO,
             complexidade,
+            desc: descricao,
             etapas: etapasProj
         });
         localStorage["projetos"] = JSON.stringify(projetos);
