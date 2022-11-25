@@ -39,15 +39,15 @@ if (data.length == 0) {
         projPendHTML += "<div class='col-3 mt-2'><div class='d-flex flex-column border border-success rounded p-3 h-100'>";
         projPendHTML += '<h5 class="text-center w-100 text-success mt-2" style="word-break: break;"><strong>' + p.titulo + '</strong></h5>';
         projPendHTML += '<div class="row">';
-        projPendHTML += '<div class="col-md-6">';
-        projPendHTML += '<p class="text-center text-success" style="word-break: break; font-size: 10pt;">' + p.SO + '</p>';
+        projPendHTML += '<div class="col-md-12">';
+        projPendHTML += '<p class="text-success" style="word-break: break; font-size: 10pt;"><strong>SO: </strong>' + p.SO + '</p>';
         projPendHTML += '</div>';
-        projPendHTML += '<div class="col-md-6">';
+        /*projPendHTML += '<div class="col-md-6">';
         projPendHTML += '<p class="text-center text-success" style="word-break: break; font-size: 10pt;">Complexidade ' + p.complexidade + '</p>';
         projPendHTML += '</div>';
         projPendHTML += '<div class="col-md-12">';
         projPendHTML += '<p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Descrição: </strong>'+ p.desc +'</p>';
-        projPendHTML += '</div>';
+        projPendHTML += '</div>';*/
         projPendHTML += '<div class="col-md-12">';
         projPendHTML += '<p class="text-success" style="word-break: break; font-size: 10pt;"><strong>Etapas</strong></p>';
         projPendHTML += '</div>';
@@ -78,7 +78,7 @@ if (data.length == 0) {
         });
 
         if (!temItem) {
-            projPendHTML += "<span id='empty'>Não há grupos disponíveis.</span>"
+            projPendHTML += "<span id='empty'>Não há etapas disponíveis.</span>"
         }
         projPendHTML += "</ul></div></div></div>";
     });
