@@ -97,6 +97,7 @@
         }
         .text-success {
             color: #4a2950!important;
+            font-size: 100%;
         }
         .border-success {
             border-color: #4a2950!important;
@@ -104,6 +105,7 @@
         .vis-item {
             background-color: #E9EAF0!important;
             border-color:#4a2950!important;
+            font-size: 9pt;
         }
         .vis-selected {
             background-color: #4a2950!important;
@@ -159,7 +161,7 @@
                     </div>
                 </div>
             </nav>
-            <div class="" id="conteudo">
+            <div class="" id="conteudo" style="background-color: white;">
                 <div id="custoTotal" class="custos p-3 d-flex align-items-center flex-wrap" onclick="javascript:clickCustos(this);">
                     <div class="col-10">
                         Custo total do projeto: 
@@ -180,7 +182,7 @@
                     <div class="row">
                         <div class="col-12 container-fluid">
                             <h3>Projetos a distribuir</h3>
-                            <div id="projPend" class="row align-items-stretch"></div>
+                            <div id="projPend" class="row align-items-stretch flex-nowrap" style="overflow-x:auto;"></div>
                         </div>
                     </div>
                 </div>
